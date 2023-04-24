@@ -1,0 +1,69 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>Inicio</nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <a>validacion de tickets</a>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="container">
+  <h1>Validacion de tickets</h1>
+  <div class="flex">
+    <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
+
+    <input style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series" />
+    <input style="width: 200px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber" />
+
+    <input style="width: 200px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name" />
+    <input style="width: 200px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni" />
+    <input style="width: 200px" nz-input placeholder="Nombre de servicio" [(ngModel)]="serviceName" />
+  </div>
+  <button class="search-button" [disabled]="!date" nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
+    <span nz-icon nzType="search"></span>
+    Buscar
+  </button>
+
+
+  <div>
+    <nz-table #basicTable [nzData]="listOfData">
+      <thead>
+      <tr>
+        <th>Estatus</th>
+        <th>Ticket</th>
+        <th>Nombre paciente</th>
+        <th>DNI</th>
+        <th>Fecha</th>
+        <th>Servicio</th>
+        <th>Moneda</th>
+        <th>Monto</th>
+        <th>IGV</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>
+          <div
+            nz-popconfirm
+            nzPopconfirmTitle="Validar ticket?"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="confirm(data)"
+            (nzOnCancel)="cancel()"
+          >
+            <app-ticket-state [status]="data.status"></app-ticket-state>
+          </div>
+        </td>
+        <td>{{ data.C_NRO_SERIE }} -   {{data.C_NRO_DOC}}</td>
+        <td>{{ data.C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE }}</td>
+        <td>{{ data.C_NRO_DOC_ADQUIRIENTE }} - {{data.C_TIP_DOC_ADQUIRIENTE}}</td>
+        <td>{{ data.C_FEC_CREA_FACE | date:'M/d/y ' }}</td>
+        <td>{{ data.C_DESRIP_ITEM }}</td>
+        <td>{{ data.C_MONEDA }}</td>
+        <td>{{ data.C_TOTAL_OPERACIONES_GRAV }}</td>
+        <td>{{ data.C_MONTO_TOTAL_IGV }}</td>
+        <td>{{ data.C_MONTO_PAGAR }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+  </div>
+</div>

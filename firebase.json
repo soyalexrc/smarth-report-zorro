@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/smarth-report-zorro",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
