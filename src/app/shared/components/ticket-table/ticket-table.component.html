@@ -1,0 +1,47 @@
+<nz-table #basicTable [nzData]="data">
+  <thead>
+  <tr>
+    <th>Estatus</th>
+    <th>Ticket</th>
+    <th>Nombre paciente</th>
+    <th>DNI</th>
+    <th>Fecha</th>
+    <th>Descripcion</th>
+    <th>Moneda</th>
+    <th>Monto</th>
+    <th>IGV</th>
+    <th>Total</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td style="width: 110px">
+      <div
+        nz-popconfirm=""
+        nzPopconfirmTitle="Validar ticket?"
+        nzPopconfirmPlacement="bottom"
+        disabled
+        (nzOnConfirm)="confirm.emit(data)"
+        (nzOnCancel)="cancel.emit()"
+        *ngIf="showValidationFunction && data.status !== 'CHECKED' "
+      >
+        <app-ticket-state [status]="data.status"></app-ticket-state>
+      </div>
+      <app-ticket-state [status]="data.status" *ngIf="!showValidationFunction || showValidationFunction && data.status === 'CHECKED' "></app-ticket-state>
+    </td>
+    <td style="min-width: 150px;">{{ data.C_NRO_SERIE }} - {{data.C_NRO_DOC}}</td>
+    <td>{{ data.C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE }}</td>
+    <td>{{ data.C_NRO_DOC_ADQUIRIENTE }}</td>
+    <td>{{ data.C_FEC_CREA_FACE | date:'M/d/y ' }}</td>
+    <td>
+      <ul>
+        <li *ngFor="let item of data.C_DESRIP_ITEM.split('#')">{{item}}</li>
+      </ul>
+    </td>
+    <td>{{ data.C_MONEDA }}</td>
+    <td>{{ data.C_TOTAL_OPERACIONES_GRAV }}</td>
+    <td>{{ data.C_MONTO_TOTAL_IGV }}</td>
+    <td>{{ data.C_MONTO_PAGAR }}</td>
+  </tr>
+  </tbody>
+</nz-table>
