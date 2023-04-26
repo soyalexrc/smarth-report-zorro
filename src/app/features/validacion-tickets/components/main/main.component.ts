@@ -1,25 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {TicketValidationService} from "../../../../services/ticket-validation.service";
 import * as moment from 'moment';
 import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
+import {Ticket} from "../../../../core/interfaces/ticket";
+import {AuthService} from "../../../../services/auth.service";
+import {User} from "../../../../core/interfaces/auth";
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
-interface Ticket {
-  id: null | string | number
-  status: string
-  username: null | string
-  C_NRO_SERIE: string
-  C_NRO_DOC: string
-  C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE: string
-  C_TIP_DOC_ADQUIRIENTE: string | number
-  C_NRO_DOC_ADQUIRIENTE: string | number
-  C_MONEDA: string
-  C_TOTAL_OPERACIONES_GRAV: string | number
-  C_MONTO_TOTAL_IGV: string | number
-  C_MONTO_PAGAR: string | number
-  C_FEC_CREA_FACE: string
-  C_ID_ITEM: string | number
-  C_DESRIP_ITEM: string
-}
 
 @Component({
   selector: 'app-main',
@@ -27,7 +14,7 @@ interface Ticket {
   styleUrls: ['./main.component.scss']
 })
 
-export class MainComponent {
+export class MainComponent implements OnInit {
   date = '';
   series = '';
   ticketNumber = '';
@@ -38,8 +25,19 @@ export class MainComponent {
   listOfData: Ticket[] = [];
   loading = false;
   confirmModal?: NzModalRef; // For testing by now
+  user!: User;
+  @ViewChild('notificationTemplate') notificationTemplate!: TemplateRef<any>
 
-  constructor(private tv: TicketValidationService, private modal: NzModalService) {
+  constructor(
+    private tv: TicketValidationService,
+    private modal: NzModalService,
+    private authService: AuthService,
+    private notification: NzNotificationService
+    ) {
+  }
+
+  ngOnInit() {
+    this.user = this.authService.getTokenDecoded()
   }
 
   onChange($event: any) {
@@ -130,9 +128,15 @@ export class MainComponent {
 
   validateTicket(ticket: Ticket) {
     const t = {...ticket};
-    t.username = 'admin';
+    t.username = this.user.sub;
     this.tv.validateTicket(t).subscribe(data => {
       console.log(data)
+      this.showNotification()
+      this.getTickets()
     })
+  }
+
+  showNotification() {
+    this.notification.template(this.notificationTemplate, {})
   }
 }

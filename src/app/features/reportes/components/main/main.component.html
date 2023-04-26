@@ -23,55 +23,23 @@
     </div>
   </div>
   <div class="flex">
-    <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
+    <nz-range-picker (keydown.enter)="getTickets()" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
 
-    <input style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series"/>
-    <input style="width: 200px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber"/>
+    <input (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series" />
+    <input (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber" />
 
-    <input style="width: 200px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name"/>
-    <input style="width: 200px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni"/>
-    <input style="width: 200px" nz-input placeholder="Nombre de servicio" [(ngModel)]="serviceName"/>
+    <input (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name" />
+    <input (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni" />
+    <input (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion" [(ngModel)]="serviceName" />
+    <button class="search-button" [disabled]="!date" nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
+      <span nz-icon nzType="search"></span>
+      Buscar
+    </button>
   </div>
-  <button class="search-button" nz-button nzType="primary" (click)="getTickets()"
-          [nzLoading]="loading">
-    <span nz-icon nzType="search"></span>
-    Buscar
-  </button>
 
 
   <div>
-    <nz-table #basicTable [nzData]="listOfData">
-      <thead>
-      <tr>
-        <th>Estatus</th>
-        <th>Ticket</th>
-        <th>Nombre paciente</th>
-        <th>DNI</th>
-        <th>Fecha</th>
-        <th>Servicio</th>
-        <th>Moneda</th>
-        <th>Monto</th>
-        <th>IGV</th>
-        <th>Total</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>
-          <app-ticket-state [status]="data.status"></app-ticket-state>
-        </td>
-        <td>{{ data.C_NRO_SERIE }} -   {{data.C_NRO_DOC}}</td>
-        <td>{{ data.C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE }}</td>
-        <td>{{ data.C_NRO_DOC_ADQUIRIENTE }} - {{data.C_TIP_DOC_ADQUIRIENTE}}</td>
-        <td>{{ data.C_FEC_CREA_FACE | date:'M/d/y ' }}</td>
-        <td>{{ data.C_DESRIP_ITEM }}</td>
-        <td>{{ data.C_MONEDA }}</td>
-        <td>{{ data.C_TOTAL_OPERACIONES_GRAV }}</td>
-        <td>{{ data.C_MONTO_TOTAL_IGV }}</td>
-        <td>{{ data.C_MONTO_PAGAR }}</td>
-      </tr>
-      </tbody>
-    </nz-table>
+    <app-ticket-table [data]="listOfData" [showValidationFunction]="false"></app-ticket-table>
 
   </div>
 </div>

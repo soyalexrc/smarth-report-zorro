@@ -14,11 +14,23 @@ export class AuthService {
 
   constructor(public jwtHelper: JwtHelperService, private http: HttpClient) {}
 
-  public isAuthenticated(): boolean {
+  isAuthenticated(): boolean {
     const token = localStorage.getItem('sr-token');
     // Check whether the token is expired and return
     // true or false
     return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  decodeToken(token: string) {
+    return this.jwtHelper.decodeToken(token);
+  }
+
+  getToken() {
+    return localStorage.getItem('sr-token')
+  }
+
+  getTokenDecoded() {
+    return this.decodeToken(this.getToken() ?? '')
   }
 
   login(username: string, password: string, remember: boolean): Observable<any> {
