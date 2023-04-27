@@ -51,12 +51,16 @@ export class MainComponent implements OnInit {
 
     const customDate = `${rangeOne}#${rangeTwo}`
 
-    const filters = [
-        {
-          field:"C_FEC_CREA_FACE",
-          value: customDate
+    const filters: any = [];
+
+      if (!this.getFilter(filters, 'C_FEC_CREA_FACE')) {
+        if (this.date.length > 0) {
+          filters.push({
+            field: 'C_FEC_CREA_FACE',
+            value: customDate
+          })
         }
-      ];
+      }
 
     if (!this.getFilter(filters, 'C_NRO_DOC_ADQUIRIENTE')) {
       if (this.dni) {
@@ -138,5 +142,9 @@ export class MainComponent implements OnInit {
 
   showNotification() {
     this.notification.template(this.notificationTemplate, {})
+  }
+
+  handleSample (e: any) {
+    console.log(e);
   }
 }

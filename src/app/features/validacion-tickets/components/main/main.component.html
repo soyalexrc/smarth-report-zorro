@@ -8,7 +8,8 @@
 <div class="container">
   <h1>Validacion de tickets</h1>
   <div class="flex">
-    <nz-range-picker (keydown.enter)="getTickets()" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
+    <nz-range-picker (nzOnCalendarChange)="handleSample($event)" (keydown.enter)="getTickets()" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
+    
 
     <input (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series" />
     <input (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber" />
@@ -16,7 +17,7 @@
     <input (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name" />
     <input (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni" />
     <input (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion" [(ngModel)]="serviceName" />
-    <button class="search-button" [disabled]="!date" nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
+    <button class="search-button"  nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
       <span nz-icon nzType="search"></span>
       Buscar
     </button>
