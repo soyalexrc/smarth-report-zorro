@@ -1,5 +1,6 @@
 .container {
   margin: 1rem;
+  position: relative;
 }
 
 .flex {
@@ -19,4 +20,22 @@
 
 .pdf-button {
   border-color: red;
+}
+
+
+//pdf
+.all-pages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
+  padding: 1rem;
+  width: 100%;
+  thead {
+    font-size: 12px;
+  }
+
+  tbody {
+    font-size: 10px;
+  }
 }

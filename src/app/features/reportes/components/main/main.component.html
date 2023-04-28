@@ -1,3 +1,7 @@
+<nz-spin [nzSpinning]="showLoader" nzTip="Descargando pdf..." >
+
+
+
 <nz-breadcrumb>
   <nz-breadcrumb-item>Inicio</nz-breadcrumb-item>
   <nz-breadcrumb-item>
@@ -9,7 +13,7 @@
   <div style="display: flex; justify-content: space-between">
     <h1>Reportes</h1>
     <div>
-      <button  nz-button  nzType="link" (click)="getTickets()"
+      <button  nz-button  nzType="link" (click)="exportToPdf()"
               [nzLoading]="pdfLoading">
         <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
         Descargar PDF
@@ -31,7 +35,7 @@
     <input (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name" />
     <input (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni" />
     <input (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion" [(ngModel)]="serviceName" />
-    <button class="search-button" [disabled]="!date" nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
+    <button class="search-button"  nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
       <span nz-icon nzType="search"></span>
       Buscar
     </button>
@@ -43,3 +47,57 @@
 
   </div>
 </div>
+
+<div style="margin-top: 10000px" *ngIf="showTable">
+  <div id="printTable" #printTable class="all-pages" >
+    <h2>Reporte de atencion</h2>
+    <table>
+      <thead>
+      <tr style="border: 1px solid black">
+        <th style="padding-bottom: .5rem; border-right: 1px solid black">Ticket</th>
+        <th style="padding-bottom: .5rem; border-right: 1px solid black">Nombre paciente</th>
+        <th style="padding-bottom: .5rem; border-right: 1px solid black">DNI</th>
+        <th style="padding-bottom: .5rem; border-right: 1px solid black">Fecha</th>
+        <th style="padding-bottom: .5rem; border-right: 1px solid black">Descripcion</th>
+        <th style="padding-bottom: .5rem; border-right: 1px solid black">Moneda</th>
+        <th style="padding-bottom: .5rem; border-right: 1px solid black">Monto</th>
+        <th style="padding-bottom: .5rem; border-right: 1px solid black">IGV</th>
+        <th style="padding-bottom: .5rem; border-right: 1px solid black">Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr style="border-bottom: 1px solid black; border-left: 1px solid black" *ngFor="let data of listOfData">
+        <td style="width: 100px; border-right: 1px solid black; text-align: center">{{ data.C_NRO_SERIE }} - {{data.C_NRO_DOC}}</td>
+        <td style="width: 200px; border-right: 1px solid black; text-align: center">{{ data.C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE }} </td>
+        <td style="width: 80px; border-right: 1px solid black; text-align: center ">{{ data.C_NRO_DOC_ADQUIRIENTE }}</td>
+        <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_FEC_CREA_FACE | date:'M/d/y ' }}</td>
+        <td style="width: 250px; border-right: 1px solid black;" >
+          <ul>
+            <li *ngFor="let item of data.C_DESRIP_ITEM.split('#')">{{item}}</li>
+          </ul>
+        </td>
+        <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_MONEDA }}</td>
+        <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_TOTAL_OPERACIONES_GRAV }}</td>
+        <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_MONTO_TOTAL_IGV }}</td>
+        <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_MONTO_PAGAR }}</td>
+      </tr>
+      </tbody>
+      <tfoot>
+        <tr style="border-bottom: 1px solid black; border-left: 1px solid black; border-right: 1px solid black">
+          <td colspan="7"></td>
+          <td style="width: 100px">
+            <b style="text-align: center">Totalizado</b>
+          </td>
+          <td style="width: 150px">
+            <h3 style="margin: 0px; width: 100%; text-align: center">{{getTotal() | currency: 'S/. '}}</h3>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+  </div>
+</div>
+
+</nz-spin>
+
+

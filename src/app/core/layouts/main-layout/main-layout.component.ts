@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AuthService} from "../../../services/auth.service";
+import {AuthService} from "../../services/auth.service";
 import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
 import {Router} from "@angular/router";
 

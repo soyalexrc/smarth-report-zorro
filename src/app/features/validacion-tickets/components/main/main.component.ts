@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {TicketValidationService} from "../../../../services/ticket-validation.service";
+import {TicketValidationService} from "../../../../core/services/ticket-validation.service";
 import * as moment from 'moment';
 import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
 import {Ticket} from "../../../../core/interfaces/ticket";
-import {AuthService} from "../../../../services/auth.service";
+import {AuthService} from "../../../../core/services/auth.service";
 import {User} from "../../../../core/interfaces/auth";
 import {NzNotificationService} from "ng-zorro-antd/notification";
 

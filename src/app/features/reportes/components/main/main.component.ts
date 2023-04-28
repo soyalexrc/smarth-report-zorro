@@ -1,18 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NzModalRef} from "ng-zorro-antd/modal";
 import * as moment from "moment/moment";
-import {TicketValidationService} from "../../../../services/ticket-validation.service";
-import {ExportExcelService} from "../../../../services/export-excel.service";
-import {AuthService} from "../../../../services/auth.service";
+import {TicketValidationService} from "../../../../core/services/ticket-validation.service";
+import {ExportExcelService} from "../../../../core/services/export-excel.service";
+import {AuthService} from "../../../../core/services/auth.service";
 import {Ticket} from "../../../../core/interfaces/ticket";
 import {User} from "../../../../core/interfaces/auth";
+import {ExportPdfService} from "../../../../core/services/export-pdf.service";
+import {Subscription} from "rxjs";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit{
+export class MainComponent implements OnInit, OnDestroy {
   date = '';
   series = '';
   ticketNumber = '';
@@ -26,18 +29,33 @@ export class MainComponent implements OnInit{
   loading = false;
   confirmModal?: NzModalRef; // For testing by now
   user!: User;
+  exportableStateSubscription = new Subscription()
+  showTable: any
+  showLoader = false;
+
+
+  @ViewChild('pdfTable') pdfTable!: ElementRef
 
   constructor(
     private tv: TicketValidationService,
     private excelService: ExportExcelService,
-    private authService: AuthService
+    private authService: AuthService,
+    private pdfService: ExportPdfService,
+    private message: NzMessageService
   ) {
   }
 
   ngOnInit() {
     this.user = this.authService.getTokenDecoded()
     this.getTickets()
+    this.exportableStateSubscription = this.pdfService.exportableState
+      .subscribe(value => {
+        this.showTable = value
+    })
+  }
 
+  ngOnDestroy() {
+    this.exportableStateSubscription.unsubscribe()
   }
 
 
@@ -80,5 +98,32 @@ export class MainComponent implements OnInit{
     );
   }
 
-  exportToPdf() {}
+  exportToPdf() {
+    this.showLoader = true
+    this.pdfService.updateExportableState(true)
+    setTimeout(() => {
+      const pages = document.querySelector('.all-pages') as HTMLElement;
+      this.pdfService.exportToPdfWithCanvas(pages).then(() => {
+        this.pdfService.updateExportableState(false)
+        this.showLoader = false
+        this.message.create('success', 'Se descargo el pdf con exito!', {})
+      });
+      // this.pdfService.exportAllToPdf(pages).then(() => {
+      //   this.pdfService.updateExportableState(false)
+      //   this.showLoader = false
+      //   this.message.create('success', 'Se descargo el pdf con exito!', {})
+      // })
+    }, 1000)
+  }
+
+
+  getTotal() {
+    let total = 0;
+
+    for (let i = 0; i < this.listOfData.length; i++) {
+      total += +this.listOfData[i].C_MONTO_PAGAR
+    }
+
+    return total;
+  }
 }

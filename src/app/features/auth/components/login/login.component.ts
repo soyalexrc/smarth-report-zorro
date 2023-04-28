@@ -1,6 +1,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthService} from "../../../../services/auth.service";
+import {AuthService} from "../../../../core/services/auth.service";
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 
