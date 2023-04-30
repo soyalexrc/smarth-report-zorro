@@ -27,7 +27,8 @@
       >
         <app-ticket-state [status]="data.status"></app-ticket-state>
       </div>
-      <app-ticket-state [status]="data.status" *ngIf="!showValidationFunction || showValidationFunction && data.status === 'CHECKED' "></app-ticket-state>
+      <app-ticket-state [status]="data.status"
+                        *ngIf="!showValidationFunction || showValidationFunction && data.status === 'CHECKED' "></app-ticket-state>
     </td>
     <td style="min-width: 150px;">{{ data.C_NRO_SERIE }} - {{data.C_NRO_DOC}}</td>
     <td>{{ data.C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE }}</td>
@@ -45,3 +46,81 @@
   </tr>
   </tbody>
 </nz-table>
+
+<div class="tablet-table">
+  <div nz-row [nzGutter]="[24, 24]" class="tablet-row">
+
+    <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="12" [nzXl]="8" *ngFor="let item of dataPaginated()">
+
+      <div class="responsive-element">
+        <div
+          nz-popconfirm=""
+          nzPopconfirmTitle="Validar ticket?"
+          nzPopconfirmPlacement="bottom"
+          disabled
+          (nzOnConfirm)="confirm.emit(item)"
+          (nzOnCancel)="cancel.emit()"
+          *ngIf="showValidationFunction && item.status !== 'CHECKED' "
+        >
+          <app-ticket-state [isSmallScreen]="true" [status]="item.status"></app-ticket-state>
+        </div>
+        <app-ticket-state [isSmallScreen]="true" [status]="item.status"
+                          *ngIf="!showValidationFunction || showValidationFunction && item.status === 'CHECKED' "></app-ticket-state>
+        <div class="flex">
+          <p>{{ item.C_NRO_SERIE }} - {{item.C_NRO_DOC}}</p>
+          <span>{{ item.C_FEC_CREA_FACE | date:'M/d/y ' }}</span>
+        </div>
+
+        <div class="patient">
+          <small>Paciente</small>
+          <p>{{ item.C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE }}</p>
+          <small>DNI</small>
+          <p>{{ item.C_NRO_DOC_ADQUIRIENTE }}</p>
+
+        </div>
+
+
+
+
+        <div>
+          <nz-collapse [nzBordered]="false">
+            <nz-collapse-panel
+              nzHeader="Descripcion"
+            >
+              <ul>
+                <li *ngFor="let listItem of item.C_DESRIP_ITEM.split('#')">{{listItem}}</li>
+              </ul>
+            </nz-collapse-panel>
+          </nz-collapse>
+
+        </div>
+
+        <div class="amounts">
+          <div>
+            <small>Moneda</small>
+            <p>{{ item.C_MONEDA }}</p>
+          </div>
+          <div>
+            <small>Monto</small>
+            <p>{{ item.C_TOTAL_OPERACIONES_GRAV }}</p>
+          </div>
+          <div>
+            <small>IGV</small>
+            <p>{{ item.C_MONTO_TOTAL_IGV }}</p>
+          </div>
+          <div>
+            <small>Total</small>
+            <p>{{ item.C_MONTO_PAGAR }}</p>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+<div style="display: flex; justify-content: flex-end; margin: 1rem">
+  <nz-pagination (nzPageIndexChange)="handlePaginatiom($event)" [nzPageIndex]="page" [nzTotal]="getPages(data)"></nz-pagination>
+</div>
+
+
+</div>

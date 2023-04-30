@@ -34,22 +34,22 @@
       <!--      </li>-->
     </ul>
   </nz-sider>
-  <nz-layout style="width: 100%" [ngStyle]="{'min-width': !isCollapsed ? 'calc(100vw - 256px)' : '100vw'}" >
-    <nz-header>
+  <nz-layout style="width: 100%" [ngStyle]="{'margin-left': !isCollapsed ? '256px' : '80px'}" >
+    <nz-header class="header">
       <div class="app-header">
-<!--        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">-->
-<!--            <span class="trigger"-->
-<!--                  nz-icon-->
-<!--                  [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"-->
-<!--            ></span>-->
-<!--        </span>-->
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <span class="trigger"
+                  nz-icon
+                  [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></span>
+        </span>
       </div>
     </nz-header>
     <nz-content>
-      <div class="inner-content">
+      <div class="inner-content" style="max-width: 100%;">
         <router-outlet></router-outlet>
       </div>
     </nz-content>
     <nz-footer>Smarth Report ©2023 powered by orthotech</nz-footer>
-  </nz-layout>
+  </nz-layout >
 </nz-layout>

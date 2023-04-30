@@ -4,6 +4,10 @@ import { TicketStateComponent } from './components/ticket-state/ticket-state.com
 import { TicketTableComponent } from './components/ticket-table/ticket-table.component';
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NzTableModule} from "ng-zorro-antd/table";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import {NzGridModule} from "ng-zorro-antd/grid";
+import {NzCollapseModule} from "ng-zorro-antd/collapse";
+import {NzPaginationModule} from "ng-zorro-antd/pagination";
 @NgModule({
   declarations: [
     TicketStateComponent,
@@ -12,7 +16,11 @@ import {NzTableModule} from "ng-zorro-antd/table";
   imports: [
     CommonModule,
     NzPopconfirmModule,
-    NzTableModule
+    NzTableModule,
+    NgxDatatableModule,
+    NzGridModule,
+    NzCollapseModule,
+    NzPaginationModule
   ],
   exports: [
     TicketStateComponent,

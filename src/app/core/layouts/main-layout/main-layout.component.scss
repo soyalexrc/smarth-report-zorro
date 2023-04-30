@@ -11,8 +11,12 @@
   width: 100%;
 }
 
+.header {
+  position: fixed;
+}
+
 .menu-sidebar {
-  position: relative;
+  position: fixed;
   z-index: 10;
   min-height: 100vh;
   box-shadow: 2px 0 6px rgba(0,21,41,.35);
@@ -77,6 +81,7 @@ nz-content {
 }
 
 .inner-content {
+  margin-top: 5rem;
   padding: 24px;
   background: #fff;
   height: 100%;

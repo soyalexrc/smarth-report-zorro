@@ -1,0 +1,54 @@
+nz-table {
+  display: none;
+}
+
+.tablet-table {
+  display: block;
+}
+
+.responsive-element {
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  padding: 1rem;
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+  margin: 1rem;
+  justify-content: space-between;
+  p {
+    font-weight: bold;
+  }
+  span {
+    font-weight: bold;
+    color: gray;
+  }
+}
+
+.amounts {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+  flex-wrap: wrap;
+  small {
+    font-weight: bold;
+  }
+}
+
+.patient {
+  margin: 1rem;
+  small {
+    font-weight:  bold;
+  }
+}
+
+@media (min-width: 1300px) {
+  nz-table {
+    display: block;
+  }
+
+  .tablet-table {
+    display: none;
+  }
+}
+

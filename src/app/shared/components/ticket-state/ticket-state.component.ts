@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class TicketStateComponent {
   @Input() status!: string;
+  @Input() isSmallScreen: boolean = false ;
 }

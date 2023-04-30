@@ -1,3 +1,10 @@
-<span class="ticket-status" [ngClass]="{'validated': status === 'CHECKED', 'pending': status === 'PENDING'}">
+<span *ngIf="!isSmallScreen else smallScreen" class="ticket-status" [ngClass]="{'validated': status === 'CHECKED', 'pending': status === 'PENDING'}">
   {{status === 'CHECKED' ? 'Validado' : 'Por validar'}}
 </span>
+
+<ng-template #smallScreen>
+  <div class="ticket-status" style="text-align: center " [ngClass]="{'validated': status === 'CHECKED', 'pending': status === 'PENDING'}">
+  {{status === 'CHECKED' ? 'Validado' : 'Por validar'}}
+</div>
+
+</ng-template>
