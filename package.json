@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "lite-server -c ./bs-config.js",
     "dev": "ng serve --watch",
+    "dev-host": "ng serve --watch --host 192.168.1.34",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

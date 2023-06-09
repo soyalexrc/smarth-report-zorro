@@ -1,5 +1,4 @@
 :host {
-  display: flex;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -17,9 +16,16 @@
 
 .menu-sidebar {
   position: fixed;
+  left: 0;
   z-index: 10;
   min-height: 100vh;
   box-shadow: 2px 0 6px rgba(0,21,41,.35);
+}
+
+nz-sider {
+  position: initial;
+  overflow: auto;
+  height: 100%;
 }
 
 .header-trigger {
@@ -88,11 +94,47 @@ nz-content {
 }
 
 
-
-
-nz-sider {
-  overflow: auto;
-  height: 100%;
-  position: fixed;
-  left: 0;
+// other styles
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
+
+
+.main-container {
+  padding: 1rem;
+}
+
+.visible {
+  display: block !important;
+}
+
+.hidden {
+  display: none !important
+}
+
+
+
+@media screen and (min-width: 1180px) {
+  .visible {
+    display: none !important;
+  }
+
+  .hidden {
+    display: flex !important;
+  }
+  .right-side-full {
+    margin-left: 215px
+  }
+  .right-side-collapsed {
+    margin-left: 80px
+  }
+  .small-right-side {
+    margin-left: 0px !important;
+  }
+
+}
+

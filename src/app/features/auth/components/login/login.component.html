@@ -1,9 +1,9 @@
 <div class="container">
   <div>
-    <h1>Inicia sesion</h1>
+    <h1 >Iniciar sesion</h1>
 
     <div>
-      <nz-input-group [nzPrefix]="prefixTemplateUser" nzSize="large">
+      <nz-input-group nzSize="large">
         <input type="text" nz-input placeholder="Nombre de usuario" [(ngModel)]="username"/>
       </nz-input-group>
 
@@ -11,14 +11,14 @@
         <input
           [type]="passwordVisible ? 'text' : 'password'"
           nz-input
-          placeholder="input password"
+          placeholder="Contrasena"
           [(ngModel)]="password"
         />
       </nz-input-group>
 
       <label style="margin-bottom: 1rem" nz-checkbox [(ngModel)]="remember">Recuerdame</label>
 
-      <button style="width: 100%" nz-button nzType="primary" nzSize="large" (click)="login()">
+      <button class="login-button" nz-button nzType="primary" nzSize="large" (click)="login()">
         Ingresar
       </button>
 
@@ -29,7 +29,7 @@
         (click)="passwordVisible = !passwordVisible"
       ></span>
       </ng-template>
-      <ng-template #prefixTemplateUser><span nz-icon nzType="user"></span></ng-template>
+
       <ng-template #suffixTemplateInfo>
         <span nz-icon nz-tooltip nzTooltipTitle="Extra information" nzType="info-circle"></span>
       </ng-template>

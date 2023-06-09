@@ -8,6 +8,10 @@ import {NzMenuModule} from "ng-zorro-antd/menu";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import {NzGridModule} from "ng-zorro-antd/grid";
+import {NzDrawerModule} from "ng-zorro-antd/drawer";
+import {NzButtonModule} from "ng-zorro-antd/button";
+import {NzAvatarModule} from "ng-zorro-antd/avatar";
+import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 // import {HTTP_INTERCEPTORS} from "@angular/common/http";
 // import {AuthInterceptor} from "./interceptor/auth.interceptor";
 
@@ -23,7 +27,11 @@ import {NzGridModule} from "ng-zorro-antd/grid";
     NzMenuModule,
     RouterLink,
     RouterOutlet,
-    NzGridModule
+    NzGridModule,
+    NzDrawerModule,
+    NzButtonModule,
+    NzAvatarModule,
+    NzDropDownModule
   ],
   providers: [
     AuthGuard,

@@ -1,4 +1,4 @@
-<nz-layout class="app-layout">
+<nz-layout class="app-layout" style="display: none">
   <nz-sider class="menu-sidebar"
             nzCollapsible
             nzWidth="256px"
@@ -8,7 +8,7 @@
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Smarth Report</h1>
+        <h1>Smart Report</h1>
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
@@ -50,6 +50,83 @@
         <router-outlet></router-outlet>
       </div>
     </nz-content>
-    <nz-footer>Smarth Report ©2023 powered by orthotech</nz-footer>
+    <nz-footer>Smart Report ©2023 powered by Smart Tech</nz-footer>
   </nz-layout >
 </nz-layout>
+
+<div>
+    <nz-sider class="menu-sidebar hidden"
+              nzCollapsible
+              nzWidth="215px"
+              nzBreakpoint="md"
+              [(nzCollapsed)]="isCollapsed"
+              [nzTrigger]="null">
+      <div class="sidebar-logo">
+        <a href="https://ng.ant.design/" target="_blank">
+          <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+          <h1 *ngIf="!isCollapsed">Smart Report</h1>
+        </a>
+      </div>
+      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <li nz-menu-item nzMatchRouter routerLink="/validacion-de-tickets" [ngStyle]="{'left': isCollapsed ? '-45px' : 0}">
+          <span nz-icon nzType="container" nzTheme="outline" style="margin-right: 1rem"></span>
+          <span>Validacion de tickets</span>
+        </li>
+        <li nz-menu-item nzMatchRouter routerLink="/reportes" [ngStyle]="{'left': isCollapsed ? '-45px' : 0}">
+          <span nz-icon nzType="dashboard" nzTheme="outline" style="margin-right: 1rem"></span>
+          <span>reportes</span>
+        </li>
+        <li nz-menu-item nzMatchRouter style="position: absolute; bottom: 10px" (click)="logout()">
+          <span nz-icon nzType="dashboard" nzTheme="outline" style="margin-right: 1rem"></span>
+          <span>Cerrar sesion</span>
+        </li>
+
+        <!--      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">-->
+        <!--        <ul>-->
+        <!--          <li nz-menu-item nzMatchRouter>-->
+        <!--            <a>Basic Form</a>-->
+        <!--          </li>-->
+        <!--        </ul>-->
+        <!--      </li>-->
+      </ul>
+    </nz-sider>
+
+
+    <div [ngClass]="{'right-side-full': !isCollapsed, 'right-side-collapsed': isCollapsed, 'small-right-side': isSmallScreen}">
+      <div class="navbar">
+         <span class="header-trigger hidden" (click)="isCollapsed = !isCollapsed">
+            <span class="trigger"
+                  nz-icon
+                  [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></span>
+        </span>
+        <button class="visible" nz-button nzType="text" nzSize="large" (click)="open()"><span nz-icon nzType="menu"></span></button>
+        <div style="display: flex; align-items: center">
+          <nz-avatar nzText="AR" nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomLeft" nzSize="large" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+        </div>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="logout()">Cerrar cesion</li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+      <main class="main-container">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+
+  <nz-drawer
+    [nzClosable]="true"
+    [nzVisible]="visible"
+    [nzWidth]="300"
+    nzPlacement="left"
+    nzTitle="Menu"
+    (nzOnClose)="close()"
+  >
+    <ng-container *nzDrawerContent>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </ng-container>
+  </nz-drawer>
+</div>

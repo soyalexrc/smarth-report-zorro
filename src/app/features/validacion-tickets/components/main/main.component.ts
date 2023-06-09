@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {TicketValidationService} from "../../../../core/services/ticket-validation.service";
 import * as moment from 'moment';
 import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
@@ -14,8 +14,10 @@ import {NzNotificationService} from "ng-zorro-antd/notification";
   styleUrls: ['./main.component.scss']
 })
 
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
   date = '';
+  dateFrom = '';
+  dateTo = '';
   series = '';
   ticketNumber = '';
   name = '';
@@ -26,6 +28,10 @@ export class MainComponent implements OnInit {
   loading = false;
   confirmModal?: NzModalRef; // For testing by now
   user!: User;
+  visible = false;
+  isSmallScreen = window.innerWidth < 900;
+
+
   @ViewChild('notificationTemplate') notificationTemplate!: TemplateRef<any>
 
   constructor(
@@ -38,6 +44,13 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getTokenDecoded()
+    window.addEventListener('resize', () => {
+      this.isSmallScreen = window.innerWidth < 900;
+    })
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', () => {});
   }
 
   onChange($event: any) {
@@ -45,21 +58,37 @@ export class MainComponent implements OnInit {
   }
 
   getTickets() {
+    this.visible = false;
     this.loading = true;
-    const rangeOne = moment(this.date[0]).format().slice(0, 10)
-    const rangeTwo = moment(this.date[1]).format().slice(0, 10)
+    console.log(this.isSmallScreen)
+    const rangeOne = moment(this.isSmallScreen ? this.dateFrom : this.date[0]).format().slice(0, 10)
+    const rangeTwo = moment(this.isSmallScreen ? this.dateTo : this.date[1]).format().slice(0, 10)
 
     const customDate = `${rangeOne}#${rangeTwo}`
+    console.log(customDate);
 
     const filters: any = [];
 
       if (!this.getFilter(filters, 'C_FEC_CREA_FACE')) {
-        if (this.date.length > 0) {
+        if (this.isSmallScreen) {
+          console.log('here')
+          console.log(this.dateFrom)
+          console.log(this.dateTo)
+          if (this.dateFrom && this.dateTo) {
+            filters.push({
+              field: 'C_FEC_CREA_FACE',
+              value: customDate
+            })
+          }
+        } else {
+
+        }if (this.date.length > 0) {
           filters.push({
             field: 'C_FEC_CREA_FACE',
             value: customDate
           })
         }
+
       }
 
     if (!this.getFilter(filters, 'C_NRO_DOC_ADQUIRIENTE')) {
@@ -146,5 +175,13 @@ export class MainComponent implements OnInit {
 
   handleSample (e: any) {
     console.log(e);
+  }
+
+  open(): void {
+    this.visible = true;
+  }
+
+  close(): void {
+    this.visible = false;
   }
 }

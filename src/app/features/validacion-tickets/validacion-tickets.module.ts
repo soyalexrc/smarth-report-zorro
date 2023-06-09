@@ -15,6 +15,7 @@ import {SharedModule} from "../../shared/shared.module";
 import {NzEmptyModule} from "ng-zorro-antd/empty";
 import {NzSpinModule} from "ng-zorro-antd/spin";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
+import {NzDrawerModule} from "ng-zorro-antd/drawer";
 
 const routes: Route[]  = [
   {
@@ -28,22 +29,23 @@ const routes: Route[]  = [
     MainComponent,
     MainComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    NzBreadCrumbModule,
-    NzDatePickerModule,
-    FormsModule,
-    NzInputModule,
-    NzFormModule,
-    NzButtonModule,
-    NzIconModule,
-    NzDividerModule,
-    NzTableModule,
-    SharedModule,
-    NzEmptyModule,
-    NzSpinModule,
-    NzPopconfirmModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        NzBreadCrumbModule,
+        NzDatePickerModule,
+        FormsModule,
+        NzInputModule,
+        NzFormModule,
+        NzButtonModule,
+        NzIconModule,
+        NzDividerModule,
+        NzTableModule,
+        SharedModule,
+        NzEmptyModule,
+        NzSpinModule,
+        NzPopconfirmModule,
+        NzDrawerModule
+    ]
 })
 export class ValidacionTicketsModule { }

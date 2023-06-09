@@ -6,18 +6,22 @@
 </nz-breadcrumb>
 
 <div class="container">
-  <h1>Validacion de tickets</h1>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin: 1rem 0">
+    <h1 style="margin: 0px">Validacion de tickets</h1>
+    <button class="visible" (click)="open()" nzSize="large" nz-button nzType="default" nzShape="circle"><span nz-icon nzType="filter"></span></button>
+  </div>
+
   <div class="flex">
-    <nz-range-picker (nzOnCalendarChange)="handleSample($event)" (keydown.enter)="getTickets()" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
-    
+    <nz-range-picker class="hidden" (nzOnCalendarChange)="handleSample($event)" (keydown.enter)="getTickets()" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
+    <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series" />
+    <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber" />
+    <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name" />
+    <input class="hidden" (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni" />
+    <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion" [(ngModel)]="serviceName" />
 
-    <input (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series" />
-    <input (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber" />
 
-    <input (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name" />
-    <input (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni" />
-    <input (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion" [(ngModel)]="serviceName" />
-    <button class="search-button"  nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
+
+    <button class="search-button hidden"  nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
       <span nz-icon nzType="search"></span>
       Buscar
     </button>
@@ -27,8 +31,41 @@
 
   <div>
     <app-ticket-table [data]="listOfData" [showValidationFunction]="true" (cancel)="cancel()" (confirm)="confirm($event)"></app-ticket-table>
-
+    <div style="display: grid; place-items: center; height: 70vh">
+      <nz-empty *ngIf="listOfData.length < 1 && !loading && isSmallScreen" nzNotFoundImage="simple" nzNotFoundContent="No hay resultados..."></nz-empty>
+      <nz-spin *ngIf="loading" nzSimple nzSize="large" nzTip="Cargando tickets..."></nz-spin>
+    </div>
   </div>
+
+  <nz-drawer
+    [nzClosable]="false"
+    [nzVisible]="visible"
+    nzPlacement="bottom"
+    [nzHeight]="420"
+    nzTitle="Filtros"
+    (nzOnClose)="close()"
+  >
+    <ng-container *nzDrawerContent>
+      <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center; width: 100; margin-bottom: 1rem" >
+        <nz-date-picker class="visible" style="width: 100%" nzPlaceHolder="Desde" [(ngModel)]="dateFrom" (ngModelChange)="onChange($event)"></nz-date-picker>
+        <p style="margin: 0px">-</p>
+        <nz-date-picker class="visible" style="width: 100%" nzPlaceHolder="Hasta" [(ngModel)]="dateTo" (ngModelChange)="onChange($event)"></nz-date-picker>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 1rem">
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 40%" nz-input placeholder="Nro serie" [(ngModel)]="series" />
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%" nz-input placeholder="Nro de ticket"
+               [(ngModel)]="ticketNumber"/>
+      </div>
+      <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input placeholder="Nombre de paciente" [(ngModel)]="name" />
+      <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input placeholder="DNI de paciente" [(ngModel)]="dni" />
+      <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input placeholder="Descripcion" [(ngModel)]="serviceName" />
+      <button class="search-button"  nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
+        <span nz-icon nzType="search"></span>
+        Buscar
+      </button>
+    </ng-container>
+  </nz-drawer>
 </div>
 
 

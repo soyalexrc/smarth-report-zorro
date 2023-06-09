@@ -1,6 +1,4 @@
-.container {
-  margin: 1rem;
-}
+
 
 .flex {
   display: flex;
@@ -11,4 +9,31 @@
 
 .search-button {
   margin: 1rem 0 ;
+  width: 100%
 }
+
+//new
+
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+@media screen and (min-width: 1180px) {
+  .visible {
+    display: none;
+  }
+
+  .hidden {
+    display: flex;
+  }
+
+  .search-button {
+    width: auto
+  }
+}
+
