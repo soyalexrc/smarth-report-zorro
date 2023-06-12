@@ -13,7 +13,7 @@
 
   <div class="flex">
     <nz-range-picker class="hidden" (nzOnCalendarChange)="handleSample($event)" (keydown.enter)="getTickets()" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
-    <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series" />
+    <input class="hidden" style="text-transform: uppercase; width: 100px" (keydown.enter)="getTickets()"  nz-input placeholder="Nro serie" [(ngModel)]="series" />
     <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber" />
     <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name" />
     <input class="hidden" (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni" />
@@ -46,14 +46,14 @@
     (nzOnClose)="close()"
   >
     <ng-container *nzDrawerContent>
-      <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center; width: 100; margin-bottom: 1rem" >
+      <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center; width: 100%; margin-bottom: 1rem" >
         <nz-date-picker class="visible" style="width: 100%" nzPlaceHolder="Desde" [(ngModel)]="dateFrom" (ngModelChange)="onChange($event)"></nz-date-picker>
         <p style="margin: 0px">-</p>
         <nz-date-picker class="visible" style="width: 100%" nzPlaceHolder="Hasta" [(ngModel)]="dateTo" (ngModelChange)="onChange($event)"></nz-date-picker>
       </div>
 
       <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 1rem">
-        <input class="visible" (keydown.enter)="getTickets()" style="width: 40%" nz-input placeholder="Nro serie" [(ngModel)]="series" />
+        <input class="visible" style="text-transform: uppercase; width: 40%" (keydown.enter)="getTickets()" nz-input placeholder="Nro serie" [(ngModel)]="series" />
         <input class="visible" (keydown.enter)="getTickets()" style="width: 100%" nz-input placeholder="Nro de ticket"
                [(ngModel)]="ticketNumber"/>
       </div>

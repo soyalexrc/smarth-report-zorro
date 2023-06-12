@@ -16,6 +16,8 @@ import {NzMessageService} from "ng-zorro-antd/message";
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
+  dateFrom = '';
+  dateTo = '';
   date = '';
   series = '';
   ticketNumber = '';
@@ -32,30 +34,40 @@ export class MainComponent implements OnInit, OnDestroy {
   exportableStateSubscription = new Subscription()
   showTable: any
   showLoader = false;
+  isSmallScreen = window.innerWidth < 1180;
+
 
 
   @ViewChild('pdfTable') pdfTable!: ElementRef
+  visible = false;
 
   constructor(
     private tv: TicketValidationService,
     private excelService: ExportExcelService,
     private authService: AuthService,
     private pdfService: ExportPdfService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private auth: AuthService
   ) {
   }
 
   ngOnInit() {
+    this.auth.validateSession();
+
     this.user = this.authService.getTokenDecoded()
     this.getTickets()
     this.exportableStateSubscription = this.pdfService.exportableState
       .subscribe(value => {
         this.showTable = value
     })
+    window.addEventListener('resize', () => {
+      this.isSmallScreen = window.innerWidth < 1180;
+    })
   }
 
   ngOnDestroy() {
     this.exportableStateSubscription.unsubscribe()
+    window.removeEventListener('resize', () => {});
   }
 
 
@@ -65,8 +77,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
   getTickets() {
     this.loading = true;
-    const rangeOne = moment(this.date[0]).format().slice(0, 10)
-    const rangeTwo = moment(this.date[1]).format().slice(0, 10)
+    const rangeOne = moment(this.isSmallScreen ? this.dateFrom : this.date[0]).format().slice(0, 10)
+    const rangeTwo = moment(this.isSmallScreen ? this.dateTo : this.date[1]).format().slice(0, 10)
 
     const customDate = `${rangeOne}#${rangeTwo}`
 
@@ -125,5 +137,14 @@ export class MainComponent implements OnInit, OnDestroy {
     }
 
     return total;
+  }
+
+
+  open(): void {
+    this.visible = true;
+  }
+
+  close(): void {
+    this.visible = false;
   }
 }

@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent implements OnInit, OnDestroy {
+  user: any;
   isCollapsed = false;
   confirmModal?: NzModalRef; // For testing by now
   visible = false;
@@ -17,6 +18,13 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const userRaw = this.auth.getTokenDecoded();
+    this.user = {
+      name: userRaw.sub,
+      nameShort: userRaw.sub?.slice(0, 2).toUpperCase(),
+      role: userRaw.auth?.split(',').map(this.formatRole)
+    }
+    console.log(userRaw.auth.split(','))
     window.addEventListener('resize', () => {
       this.isSmallScreen = window.innerWidth < 900;
     })
@@ -43,5 +51,9 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   close(): void {
     this.visible = false;
+  }
+
+  formatRole(role: string) {
+    return role.split('_').join(' ')
   }
 }

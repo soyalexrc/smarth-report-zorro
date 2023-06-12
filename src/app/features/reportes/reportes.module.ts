@@ -14,6 +14,7 @@ import {NzWaveModule} from "ng-zorro-antd/core/wave";
 import {SharedModule} from "../../shared/shared.module";
 import {NzSpinModule} from "ng-zorro-antd/spin";
 import {NzAlertModule} from "ng-zorro-antd/alert";
+import {NzDrawerModule} from "ng-zorro-antd/drawer";
 
 
 const routes: Route[]  = [
@@ -27,21 +28,22 @@ const routes: Route[]  = [
   declarations: [
     MainComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    FormsModule,
-    NzBreadCrumbModule,
-    NzButtonModule,
-    NzDatePickerModule,
-    NzIconModule,
-    NzInputModule,
-    NzPopconfirmModule,
-    NzTableModule,
-    NzWaveModule,
-    SharedModule,
-    NzSpinModule,
-    NzAlertModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        FormsModule,
+        NzBreadCrumbModule,
+        NzButtonModule,
+        NzDatePickerModule,
+        NzIconModule,
+        NzInputModule,
+        NzPopconfirmModule,
+        NzTableModule,
+        NzWaveModule,
+        SharedModule,
+        NzSpinModule,
+        NzAlertModule,
+        NzDrawerModule
+    ]
 })
 export class ReportesModule { }

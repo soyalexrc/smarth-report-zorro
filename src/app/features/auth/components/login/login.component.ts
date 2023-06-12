@@ -19,13 +19,12 @@ export class LoginComponent {
 
   login() {
     this.auth.login(this.username, this.password, this.remember).subscribe(data => {
-      localStorage.setItem('sr-token', data.id_token)
+      this.auth.setToken(data.id_token)
       this.router.navigate(['/'])
       this.showMessage('success', `Bienvenid@, ${this.username}`)
 
     }, error => {
-      console.log(error)
-      this.showMessage('error', error.error.detail)
+      this.showMessage('error', (error.error.detail || 'Ocurrio un error inesperado, por favor prueba mas tarde...'))
     })
   }
 

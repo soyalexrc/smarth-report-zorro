@@ -102,7 +102,13 @@
         </span>
         <button class="visible" nz-button nzType="text" nzSize="large" (click)="open()"><span nz-icon nzType="menu"></span></button>
         <div style="display: flex; align-items: center">
-          <nz-avatar nzText="AR" nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomLeft" nzSize="large" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+          <div style="margin-right: 1rem;">
+            <p class="user-name">{{user.name}}</p>
+            <p class="user-role">
+              <span *ngFor="let role of user.role">{{role}}</span>
+            </p>
+          </div>
+          <nz-avatar [nzText]="user.nameShort" nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomLeft" nzSize="large" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
         </div>
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu>
@@ -116,17 +122,37 @@
     </div>
 
   <nz-drawer
-    [nzClosable]="true"
     [nzVisible]="visible"
     [nzWidth]="300"
+    [nzBodyStyle]="{'background-color': '#001529'}"
+
     nzPlacement="left"
     nzTitle="Menu"
     (nzOnClose)="close()"
   >
     <ng-container *nzDrawerContent>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
+      <ul nz-menu nzTheme="dark" nzMode="inline" >
+      <li nz-menu-item nzMatchRouter routerLink="/validacion-de-tickets" >
+        <span nz-icon nzType="container" nzTheme="outline" style="margin-right: 1rem"></span>
+        <span>Validacion de tickets</span>
+      </li>
+      <li nz-menu-item nzMatchRouter routerLink="/reportes" >
+        <span nz-icon nzType="dashboard" nzTheme="outline" style="margin-right: 1rem"></span>
+        <span>reportes</span>
+      </li>
+      <li nz-menu-item nzMatchRouter style="position: absolute; bottom: 10px" (click)="logout()">
+        <span nz-icon nzType="dashboard" nzTheme="outline" style="margin-right: 1rem"></span>
+        <span>Cerrar sesion</span>
+      </li>
+
+      <!--      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">-->
+      <!--        <ul>-->
+      <!--          <li nz-menu-item nzMatchRouter>-->
+      <!--            <a>Basic Form</a>-->
+      <!--          </li>-->
+      <!--        </ul>-->
+      <!--      </li>-->
+      </ul>
     </ng-container>
   </nz-drawer>
 </div>

@@ -1,88 +1,150 @@
-<nz-spin [nzSpinning]="showLoader" nzTip="Descargando pdf..." >
+<nz-spin [nzSpinning]="showLoader" nzTip="Descargando pdf...">
 
 
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>Inicio</nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a>Reportes</a>
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
 
-<nz-breadcrumb>
-  <nz-breadcrumb-item>Inicio</nz-breadcrumb-item>
-  <nz-breadcrumb-item>
-    <a>Reportes</a>
-  </nz-breadcrumb-item>
-</nz-breadcrumb>
 
-<div class="container">
-  <div style="display: flex; justify-content: space-between">
-    <h1>Reportes</h1>
-    <div>
-      <button  nz-button  nzType="link" (click)="exportToPdf()"
-              [nzLoading]="pdfLoading">
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; margin: 1rem 0">
+        <h1>Reportes</h1>
+      <button class="visible" (click)="open()" nzSize="large" nz-button nzType="default" nzShape="circle"><span
+        nz-icon nzType="filter"></span></button>
+      <div class="hidden">
+        <button nz-button nzType="link" (click)="exportToPdf()"
+                [nzLoading]="pdfLoading">
+          <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
+          Descargar PDF
+        </button>
+        <button nz-button nzType="link" (click)="exportToExcel()"
+                [nzLoading]="excelLoading">
+          <span nz-icon nzType="file-excel" nzTheme="outline"></span>
+          Descargar Excel
+
+        </button>
+      </div>
+    </div>
+    <div class="export-buttons">
+      <button  nz-button  nzType="primary" (click)="exportToPdf()"
+               [nzLoading]="pdfLoading">
         <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
         Descargar PDF
       </button>
-      <button  nz-button  nzType="link" (click)="exportToExcel()"
-              [nzLoading]="excelLoading">
+      <button  nz-button  nzType="default" (click)="exportToExcel()"
+               [nzLoading]="excelLoading">
         <span nz-icon nzType="file-excel" nzTheme="outline"></span>
         Descargar Excel
 
       </button>
     </div>
+    <div class="flex">
+      <nz-range-picker class="hidden" (keydown.enter)="getTickets()" [(ngModel)]="date"
+                       (ngModelChange)="onChange($event)"></nz-range-picker>
+
+      <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie"
+             [(ngModel)]="series"/>
+      <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket"
+             [(ngModel)]="ticketNumber"/>
+
+      <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input
+             placeholder="Nombre de paciente" [(ngModel)]="name"/>
+      <input class="hidden" (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente"
+             [(ngModel)]="dni"/>
+      <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion"
+             [(ngModel)]="serviceName"/>
+      <button class="search-button hidden" nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
+        <span nz-icon nzType="search"></span>
+        Buscar
+      </button>
+    </div>
+
+
+    <div>
+      <app-ticket-table [data]="listOfData" [showValidationFunction]="false"></app-ticket-table>
+    </div>
+
+    <nz-drawer
+      [nzClosable]="false"
+      [nzVisible]="visible"
+      nzPlacement="bottom"
+      [nzHeight]="420"
+      nzTitle="Filtros"
+      (nzOnClose)="close()"
+    >
+      <ng-container *nzDrawerContent>
+        <div
+          style="display: flex; justify-content: space-between; gap: 10px; align-items: center; width: 100%; margin-bottom: 1rem">
+          <nz-date-picker class="visible" style="width: 100%" nzPlaceHolder="Desde" [(ngModel)]="dateFrom"
+                          (ngModelChange)="onChange($event)"></nz-date-picker>
+          <p style="margin: 0px">-</p>
+          <nz-date-picker class="visible" style="width: 100%" nzPlaceHolder="Hasta" [(ngModel)]="dateTo"
+                          (ngModelChange)="onChange($event)"></nz-date-picker>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 1rem">
+          <input class="visible" style="text-transform: uppercase; width: 40%" (keydown.enter)="getTickets()" nz-input
+                 placeholder="Nro serie" [(ngModel)]="series"/>
+          <input class="visible" (keydown.enter)="getTickets()" style="width: 100%" nz-input placeholder="Nro de ticket"
+                 [(ngModel)]="ticketNumber"/>
+        </div>
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input
+               placeholder="Nombre de paciente" [(ngModel)]="name"/>
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input
+               placeholder="DNI de paciente" [(ngModel)]="dni"/>
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input
+               placeholder="Descripcion" [(ngModel)]="serviceName"/>
+        <button class="search-button" nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
+          <span nz-icon nzType="search"></span>
+          Buscar
+        </button>
+      </ng-container>
+    </nz-drawer>
   </div>
-  <div class="flex">
-    <nz-range-picker (keydown.enter)="getTickets()" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
 
-    <input (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series" />
-    <input (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber" />
-
-    <input (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name" />
-    <input (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni" />
-    <input (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion" [(ngModel)]="serviceName" />
-    <button class="search-button"  nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
-      <span nz-icon nzType="search"></span>
-      Buscar
-    </button>
-  </div>
-
-
-  <div>
-    <app-ticket-table [data]="listOfData" [showValidationFunction]="false"></app-ticket-table>
-
-  </div>
-</div>
-
-<div style="margin-top: 10000px" *ngIf="showTable">
-  <div id="printTable" #printTable class="all-pages" >
-    <h2>Reporte de atencion</h2>
-    <table>
-      <thead>
-      <tr style="border: 1px solid black">
-        <th style="padding-bottom: .5rem; border-right: 1px solid black">Ticket</th>
-        <th style="padding-bottom: .5rem; border-right: 1px solid black">Nombre paciente</th>
-        <th style="padding-bottom: .5rem; border-right: 1px solid black">DNI</th>
-        <th style="padding-bottom: .5rem; border-right: 1px solid black">Fecha</th>
-        <th style="padding-bottom: .5rem; border-right: 1px solid black">Descripcion</th>
-        <th style="padding-bottom: .5rem; border-right: 1px solid black">Moneda</th>
-        <th style="padding-bottom: .5rem; border-right: 1px solid black">Monto</th>
-        <th style="padding-bottom: .5rem; border-right: 1px solid black">IGV</th>
-        <th style="padding-bottom: .5rem; border-right: 1px solid black">Total</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr style="border-bottom: 1px solid black; border-left: 1px solid black" *ngFor="let data of listOfData">
-        <td style="width: 100px; border-right: 1px solid black; text-align: center">{{ data.C_NRO_SERIE }} - {{data.C_NRO_DOC}}</td>
-        <td style="width: 200px; border-right: 1px solid black; text-align: center">{{ data.C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE }} </td>
-        <td style="width: 80px; border-right: 1px solid black; text-align: center ">{{ data.C_NRO_DOC_ADQUIRIENTE }}</td>
-        <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_FEC_CREA_FACE | date:'M/d/y ' }}</td>
-        <td style="width: 250px; border-right: 1px solid black;" >
-          <ul>
-            <li *ngFor="let item of data.C_DESRIP_ITEM.split('#')">{{item}}</li>
-          </ul>
-        </td>
-        <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_MONEDA }}</td>
-        <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_TOTAL_OPERACIONES_GRAV }}</td>
-        <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_MONTO_TOTAL_IGV }}</td>
-        <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_MONTO_PAGAR }}</td>
-      </tr>
-      </tbody>
-      <tfoot>
+  <div style="margin-top: 10000px" *ngIf="showTable">
+    <div id="printTable" #printTable class="all-pages">
+      <h2>Reporte de atencion</h2>
+      <table>
+        <thead>
+        <tr style="border: 1px solid black">
+          <th style="padding-bottom: .5rem; border-right: 1px solid black">Ticket</th>
+          <th style="padding-bottom: .5rem; border-right: 1px solid black">Nombre paciente</th>
+          <th style="padding-bottom: .5rem; border-right: 1px solid black">DNI</th>
+          <th style="padding-bottom: .5rem; border-right: 1px solid black">Fecha</th>
+          <th style="padding-bottom: .5rem; border-right: 1px solid black">Descripcion</th>
+          <th style="padding-bottom: .5rem; border-right: 1px solid black">Moneda</th>
+          <th style="padding-bottom: .5rem; border-right: 1px solid black">Monto</th>
+          <th style="padding-bottom: .5rem; border-right: 1px solid black">IGV</th>
+          <th style="padding-bottom: .5rem; border-right: 1px solid black">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="border-bottom: 1px solid black; border-left: 1px solid black" *ngFor="let data of listOfData">
+          <td style="width: 100px; border-right: 1px solid black; text-align: center">{{ data.C_NRO_SERIE }}
+            - {{data.C_NRO_DOC}}</td>
+          <td
+            style="width: 200px; border-right: 1px solid black; text-align: center">{{ data.C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE }} </td>
+          <td
+            style="width: 80px; border-right: 1px solid black; text-align: center ">{{ data.C_NRO_DOC_ADQUIRIENTE }}</td>
+          <td
+            style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_FEC_CREA_FACE | date:'M/d/y ' }}</td>
+          <td style="width: 250px; border-right: 1px solid black;">
+            <ul>
+              <li *ngFor="let item of data.C_DESRIP_ITEM.split('#')">{{item}}</li>
+            </ul>
+          </td>
+          <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_MONEDA }}</td>
+          <td
+            style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_TOTAL_OPERACIONES_GRAV }}</td>
+          <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_MONTO_TOTAL_IGV }}</td>
+          <td style="width: 80px; border-right: 1px solid black; text-align: center">{{ data.C_MONTO_PAGAR }}</td>
+        </tr>
+        </tbody>
+        <tfoot>
         <tr style="border-bottom: 1px solid black; border-left: 1px solid black; border-right: 1px solid black">
           <td colspan="7"></td>
           <td style="width: 100px">
@@ -92,10 +154,10 @@
             <h3 style="margin: 0px; width: 100%; text-align: center">{{getTotal() | currency: 'S/. '}}</h3>
           </td>
         </tr>
-      </tfoot>
-    </table>
+        </tfoot>
+      </table>
+    </div>
   </div>
-</div>
 
 </nz-spin>
 

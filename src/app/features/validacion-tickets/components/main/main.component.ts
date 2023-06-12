@@ -29,7 +29,7 @@ export class MainComponent implements OnInit, OnDestroy {
   confirmModal?: NzModalRef; // For testing by now
   user!: User;
   visible = false;
-  isSmallScreen = window.innerWidth < 900;
+  isSmallScreen = window.innerWidth < 1180;
 
 
   @ViewChild('notificationTemplate') notificationTemplate!: TemplateRef<any>
@@ -38,19 +38,23 @@ export class MainComponent implements OnInit, OnDestroy {
     private tv: TicketValidationService,
     private modal: NzModalService,
     private authService: AuthService,
-    private notification: NzNotificationService
-    ) {
+    private notification: NzNotificationService,
+    private auth: AuthService
+  ) {
   }
 
   ngOnInit() {
+    this.auth.validateSession();
+
     this.user = this.authService.getTokenDecoded()
     window.addEventListener('resize', () => {
-      this.isSmallScreen = window.innerWidth < 900;
+      this.isSmallScreen = window.innerWidth < 1180;
     })
   }
 
   ngOnDestroy() {
-    window.removeEventListener('resize', () => {});
+    window.removeEventListener('resize', () => {
+    });
   }
 
   onChange($event: any) {
@@ -60,36 +64,20 @@ export class MainComponent implements OnInit, OnDestroy {
   getTickets() {
     this.visible = false;
     this.loading = true;
-    console.log(this.isSmallScreen)
     const rangeOne = moment(this.isSmallScreen ? this.dateFrom : this.date[0]).format().slice(0, 10)
     const rangeTwo = moment(this.isSmallScreen ? this.dateTo : this.date[1]).format().slice(0, 10)
 
     const customDate = `${rangeOne}#${rangeTwo}`
-    console.log(customDate);
 
     const filters: any = [];
 
-      if (!this.getFilter(filters, 'C_FEC_CREA_FACE')) {
-        if (this.isSmallScreen) {
-          console.log('here')
-          console.log(this.dateFrom)
-          console.log(this.dateTo)
-          if (this.dateFrom && this.dateTo) {
-            filters.push({
-              field: 'C_FEC_CREA_FACE',
-              value: customDate
-            })
-          }
-        } else {
+    if (!this.getFilter(filters, 'C_FEC_CREA_FACE')) {
+      filters.push({
+        field: 'C_FEC_CREA_FACE',
+        value: customDate
+      })
+    }
 
-        }if (this.date.length > 0) {
-          filters.push({
-            field: 'C_FEC_CREA_FACE',
-            value: customDate
-          })
-        }
-
-      }
 
     if (!this.getFilter(filters, 'C_NRO_DOC_ADQUIRIENTE')) {
       if (this.dni) {
@@ -112,7 +100,7 @@ export class MainComponent implements OnInit, OnDestroy {
       if (this.series) {
         filters.push({
           field: 'C_NRO_SERIE',
-          value: this.series
+          value: this.series.toUpperCase()
         })
       }
     }
@@ -132,7 +120,7 @@ export class MainComponent implements OnInit, OnDestroy {
         })
       }
     }
-    this.tv.getTickets(filters).subscribe(data =>  {
+    this.tv.getTickets(filters).subscribe(data => {
       this.listOfData = data;
       this.loading = false
     })
@@ -173,7 +161,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.notification.template(this.notificationTemplate, {})
   }
 
-  handleSample (e: any) {
+  handleSample(e: any) {
     console.log(e);
   }
 

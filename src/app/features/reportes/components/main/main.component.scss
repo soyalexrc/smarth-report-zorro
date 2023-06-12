@@ -1,7 +1,3 @@
-.container {
-  margin: 1rem;
-  position: relative;
-}
 
 .flex {
   display: flex;
@@ -21,6 +17,42 @@
 .pdf-button {
   border-color: red;
 }
+
+
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+@media screen and (min-width: 1180px) {
+  .visible {
+    display: none;
+  }
+
+  .hidden {
+    display: flex;
+  }
+
+  .search-button {
+    width: auto
+  }
+  .export-buttons {
+    display: none !important;
+  }
+}
+
+.export-buttons {
+  display: flex;
+  gap: 1rem;
+  & button {
+    flex: 1;
+  }
+}
+
 
 
 //pdf
