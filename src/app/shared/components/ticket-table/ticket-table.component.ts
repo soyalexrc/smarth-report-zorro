@@ -18,7 +18,7 @@ export class TicketTableComponent {
   offset = 0;
   page = 1
 
-  handlePaginatiom(event: any) {
+  handlePagination(event: any) {
     this.page = event;
     this.offset = event - 1;
   }
@@ -28,7 +28,8 @@ export class TicketTableComponent {
   }
 
   getPages(data: Ticket[]) {
-    return Math.ceil(data.length / this.size)
+    // return Math.ceil(data.length / this.size)
+    return data.length
   }
 
 }

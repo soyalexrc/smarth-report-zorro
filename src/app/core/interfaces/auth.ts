@@ -3,3 +3,8 @@ export interface User {
   exp: string;
   auth: string;
 }
+
+export interface UserByRole {
+  _id: string;
+  username: string;
+}

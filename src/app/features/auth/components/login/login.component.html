@@ -4,19 +4,20 @@
 
     <div>
       <nz-input-group nzSize="large">
-        <input type="text" nz-input placeholder="Nombre de usuario" [(ngModel)]="username"/>
+        <input type="text" (keydown.enter)="login()" nz-input placeholder="Nombre de usuario" [(ngModel)]="username"/>
       </nz-input-group>
 
       <nz-input-group nzSize="large" style="margin: 1rem 0" [nzSuffix]="suffixTemplate">
         <input
           [type]="passwordVisible ? 'text' : 'password'"
+          (keydown.enter)="login()"
           nz-input
           placeholder="Contrasena"
           [(ngModel)]="password"
         />
       </nz-input-group>
 
-      <label style="margin-bottom: 1rem" nz-checkbox [(ngModel)]="remember">Recuerdame</label>
+      <label style="margin-bottom: 1rem" nz-checkbox (nzCheckedChange)="handleRememberChange($event)" [(ngModel)]="remember">Recuerdame</label>
 
       <button class="login-button" nz-button nzType="primary" nzSize="large" (click)="login()">
         Ingresar

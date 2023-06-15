@@ -69,13 +69,17 @@ export class MainComponent implements OnInit, OnDestroy {
 
     const customDate = `${rangeOne}#${rangeTwo}`
 
+
+
     const filters: any = [];
 
     if (!this.getFilter(filters, 'C_FEC_CREA_FACE')) {
-      filters.push({
-        field: 'C_FEC_CREA_FACE',
-        value: customDate
-      })
+      if (Boolean((this.dateFrom && this.dateTo) || this.date)) {
+        filters.push({
+          field: 'C_FEC_CREA_FACE',
+          value: customDate
+        })
+      }
     }
 
 

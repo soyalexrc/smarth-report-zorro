@@ -19,6 +19,10 @@ export class TicketValidationService {
     return this.http.get(`${this.basePath}/external/report/${userName}`)
   }
 
+  getTicketsByUserNameAndFilters(userName: string, filters: any): Observable<any> {
+    return this.http.post(`${this.basePath}/external/v2/report/${userName}`, {filters: filters})
+  }
+
   validateTicket(ticket: any): Observable<any> {
     return this.http.post(`${this.basePath}/external/process`, ticket)
   }

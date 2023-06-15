@@ -42,20 +42,14 @@
       </button>
     </div>
     <div class="flex">
-      <nz-range-picker class="hidden" (keydown.enter)="getTickets()" [(ngModel)]="date"
-                       (ngModelChange)="onChange($event)"></nz-range-picker>
+      <nz-range-picker class="hidden" (keydown.enter)="getTickets()" [(ngModel)]="date" [nzPlaceHolder]="['Desde', 'Hasta']" (ngModelChange)="onChange($event)"></nz-range-picker>
 
-      <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie"
-             [(ngModel)]="series"/>
-      <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket"
-             [(ngModel)]="ticketNumber"/>
+      <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series"/>
+      <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber"/>
 
-      <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input
-             placeholder="Nombre de paciente" [(ngModel)]="name"/>
-      <input class="hidden" (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente"
-             [(ngModel)]="dni"/>
-      <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion"
-             [(ngModel)]="serviceName"/>
+      <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name"/>
+      <input class="hidden" (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni"/>
+      <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion" [(ngModel)]="serviceName"/>
       <button class="search-button hidden" nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
         <span nz-icon nzType="search"></span>
         Buscar
@@ -86,17 +80,12 @@
         </div>
 
         <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 1rem">
-          <input class="visible" style="text-transform: uppercase; width: 40%" (keydown.enter)="getTickets()" nz-input
-                 placeholder="Nro serie" [(ngModel)]="series"/>
-          <input class="visible" (keydown.enter)="getTickets()" style="width: 100%" nz-input placeholder="Nro de ticket"
-                 [(ngModel)]="ticketNumber"/>
+          <input class="visible" style="text-transform: uppercase; width: 40%" (keydown.enter)="getTickets()" nz-input placeholder="Nro serie" [(ngModel)]="series"/>
+          <input class="visible" (keydown.enter)="getTickets()" style="width: 100%" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber"/>
         </div>
-        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input
-               placeholder="Nombre de paciente" [(ngModel)]="name"/>
-        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input
-               placeholder="DNI de paciente" [(ngModel)]="dni"/>
-        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input
-               placeholder="Descripcion" [(ngModel)]="serviceName"/>
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input placeholder="Nombre de paciente" [(ngModel)]="name"/>
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input placeholder="DNI de paciente" [(ngModel)]="dni"/>
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input placeholder="Descripcion" [(ngModel)]="serviceName"/>
         <button class="search-button" nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
           <span nz-icon nzType="search"></span>
           Buscar
