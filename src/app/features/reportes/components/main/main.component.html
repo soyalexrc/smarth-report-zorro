@@ -28,6 +28,20 @@
         </button>
       </div>
     </div>
+    <div class="visible" style="margin-bottom: 1rem">
+      <p style="font-weight: bold; margin-bottom: .5rem; color: gray">Buscar por usuario de servicio</p>
+      <nz-select (ngModelChange)="handleSelectUserByRoleChange($event)" nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading" style="width: 100%">
+        <nz-option [nzValue]="user.sub" [nzLabel]="user.sub"></nz-option>
+        <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
+      </nz-select>
+    </div>
+    <div class="hidden-block" style="margin-bottom: 1rem">
+      <p style="font-weight: bold; margin-bottom: .5rem; color: gray">Buscar por usuario de servicio</p>
+      <nz-select (ngModelChange)="handleSelectUserByRoleChange($event)" nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading" style="width: 25%">
+        <nz-option [nzValue]="user.sub" [nzLabel]="user.sub"></nz-option>
+        <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
+      </nz-select>
+    </div>
     <div class="export-buttons">
       <button  nz-button  nzType="primary" (click)="exportToPdf()"
                [nzLoading]="pdfLoading">

@@ -24,6 +24,10 @@
   display: none;
 }
 
+.hidden-block {
+  display: none;
+}
+
 .visible {
   display: block;
 }
@@ -35,6 +39,10 @@
 
   .hidden {
     display: flex;
+  }
+
+  .hidden-block {
+    display: block;
   }
 
   .search-button {

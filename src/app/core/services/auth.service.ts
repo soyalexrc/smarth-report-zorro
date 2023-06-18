@@ -68,4 +68,9 @@ export class AuthService {
       return
     }
   }
+
+  isBoss() {
+    return this.getTokenDecoded()?.auth.includes('JEFE');
+  }
+
 }

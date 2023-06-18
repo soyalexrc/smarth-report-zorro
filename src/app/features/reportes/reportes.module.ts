@@ -15,6 +15,7 @@ import {SharedModule} from "../../shared/shared.module";
 import {NzSpinModule} from "ng-zorro-antd/spin";
 import {NzAlertModule} from "ng-zorro-antd/alert";
 import {NzDrawerModule} from "ng-zorro-antd/drawer";
+import {NzSelectModule} from "ng-zorro-antd/select";
 
 
 const routes: Route[]  = [
@@ -43,7 +44,8 @@ const routes: Route[]  = [
         SharedModule,
         NzSpinModule,
         NzAlertModule,
-        NzDrawerModule
+        NzDrawerModule,
+        NzSelectModule
     ]
 })
 export class ReportesModule { }
