@@ -235,4 +235,8 @@ export class MainComponent implements OnInit, OnDestroy {
       })
     }
   }
+
+  get isServiceBoss() {
+    return this.user.auth.includes('JEFE');
+  }
 }

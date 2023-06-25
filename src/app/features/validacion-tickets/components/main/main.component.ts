@@ -176,4 +176,8 @@ export class MainComponent implements OnInit, OnDestroy {
   close(): void {
     this.visible = false;
   }
+
+  get isAdmin() {
+    return this.user.auth.includes('ADMIN');
+  }
 }

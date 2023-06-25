@@ -56,4 +56,8 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   formatRole(role: string) {
     return role.split('_').join(' ')
   }
+
+  get isServiceBoss() {
+    return this.user.role[0].includes('JEFE');
+  }
 }

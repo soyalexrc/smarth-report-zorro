@@ -4,14 +4,14 @@
   <nz-breadcrumb>
     <nz-breadcrumb-item>Inicio</nz-breadcrumb-item>
     <nz-breadcrumb-item>
-      <a>Reportes</a>
+      <a>{{isServiceBoss ? 'Reportes de servicio' : 'Reportes'}}</a>
     </nz-breadcrumb-item>
   </nz-breadcrumb>
 
 
   <div class="container">
     <div style="display: flex; justify-content: space-between; margin: 1rem 0">
-        <h1>Reportes</h1>
+        <h1>{{isServiceBoss ? 'Reportes de servicio' : 'Reportes'}}</h1>
       <button class="visible" (click)="open()" nzSize="large" nz-button nzType="default" nzShape="circle"><span
         nz-icon nzType="filter"></span></button>
       <div class="hidden">
@@ -41,9 +41,13 @@
 
       </button>
     </div>
+    <h3>Buscar por miembro del servicio</h3>
+    <nz-select style="width: 265px; margin-bottom: 1rem"  ngModel="lucy" nzLoading>
+      <nz-option  nzValue="lucy" nzLabel="Lucy"></nz-option>
+    </nz-select>
+
     <div class="flex">
       <nz-range-picker class="hidden" (keydown.enter)="getTickets()" [(ngModel)]="date" [nzPlaceHolder]="['Desde', 'Hasta']" (ngModelChange)="onChange($event)"></nz-range-picker>
-
       <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series"/>
       <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber"/>
 
