@@ -12,7 +12,7 @@
   </div>
 
   <div class="flex">
-    <nz-range-picker class="hidden" (nzOnCalendarChange)="handleSample($event)" (keydown.enter)="getTickets()" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
+    <nz-range-picker class="hidden" *ngIf="isAdmin" (nzOnCalendarChange)="handleSample($event)" (keydown.enter)="getTickets()" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
     <input class="hidden" style="text-transform: uppercase; width: 100px" (keydown.enter)="getTickets()"  nz-input placeholder="Nro serie" [(ngModel)]="series" />
     <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber" />
     <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name" />
