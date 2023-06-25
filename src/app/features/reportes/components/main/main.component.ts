@@ -27,7 +27,9 @@ export class MainComponent implements OnInit, OnDestroy {
   serviceName = '';
   pdfLoading = false;
   excelLoading = false;
+  rolesLoading = false;
 
+  userRoleToSearch: any;
   listOfData: Ticket[] = [];
   listOfUsersByRole: UserByRole[] = [];
   loading = false;
@@ -45,6 +47,8 @@ export class MainComponent implements OnInit, OnDestroy {
   dateValidatedFrom = ''
   dateValidatedTo = ''
 
+  isBoss = false;
+
   constructor(
     private tv: TicketValidationService,
     private excelService: ExportExcelService,
@@ -57,9 +61,12 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.isBoss = this.auth.isBoss();
     this.auth.validateSession();
     this.user = this.authService.getTokenDecoded()
-    this.getUsersByRole();
+    if (this.isBoss) {
+      this.getUsersByRole();
+    }
     this.getTickets()
     this.exportableStateSubscription = this.pdfService.exportableState
       .subscribe(value => {
@@ -81,7 +88,7 @@ export class MainComponent implements OnInit, OnDestroy {
     console.log($event)
   }
 
-  getTickets() {
+  getTickets(user = '') {
     this.loading = true;
     const rangeOne = moment(this.isSmallScreen ? this.dateFrom : this.date[0]).format().slice(0, 10)
     const rangeTwo = moment(this.isSmallScreen ? this.dateTo : this.date[1]).format().slice(0, 10)
@@ -158,7 +165,7 @@ export class MainComponent implements OnInit, OnDestroy {
     }
 
 
-    this.tv.getTicketsByUserName(this.user?.sub).subscribe(data => {
+    this.tv.getTicketsByUserName(user ? user : this.user?.sub).subscribe(data => {
       this.listOfData = data;
       console.log(data);
       this.loading = false
@@ -228,12 +235,16 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   getUsersByRole() {
-    if (this.user?.auth.includes('JEFE')) {
-      console.log(this.user.auth)
-      this.userService.getUsersByRole(this.user?.auth.replace('JEFE_', '')).subscribe(value => {
+    this.rolesLoading = true;
+    const role = this.user?.auth.replace('JEFE_', '')
+      this.userService.getUsersByRole(role).subscribe(value => {
+        this.listOfUsersByRole = value;
         console.log(value)
-      })
-    }
+      }, _ => {}, () => this.rolesLoading = false)
+  }
+
+  handleSelectUserByRoleChange(event: any) {
+    this.getTickets(event);
   }
 
   get isServiceBoss() {
