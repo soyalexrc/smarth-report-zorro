@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: '/validacion-de-tickets' },
+      { path: '', pathMatch: 'full', redirectTo: '/reportes' },
       {
         path: 'validacion-de-tickets',
         canActivate: [AuthGuard],

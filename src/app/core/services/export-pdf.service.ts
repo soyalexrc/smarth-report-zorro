@@ -63,22 +63,20 @@ export class ExportPdfService {
       const canvasImageHeight = htmlHeight;
 
       const totalPDFPages = Math.ceil(htmlHeight / pdfHeight) - 1;
-
-      console.log(totalPDFPages);
-
       html2canvas(pages, { allowTaint: true }).then(canvas => {
 
         canvas.getContext('2d');
         const imgData = canvas.toDataURL("image/jpeg", 1.0);
         let pdf = new jsPDF('p', 'pt', [pdfWidth, pdfHeight]);
-        pdf.addImage(imgData, 'png', topLeftMargin, topLeftMargin, canvasImageWidth, canvasImageHeight);
+          pdf.addImage(imgData, 'png', topLeftMargin, topLeftMargin, canvasImageWidth, canvasImageHeight);
 
-        for (let i = 1; i <= totalPDFPages; i++) {
-          pdf.addPage([pdfWidth, pdfHeight], 'p');
-          pdf.addImage(imgData, 'png', topLeftMargin, - (pdfHeight * i) + (topLeftMargin * 4), canvasImageWidth, canvasImageHeight);
-        }
+          for (let i = 1; i <= totalPDFPages; i++) {
+            pdf.addPage([pdfWidth, pdfHeight], 'p');
+            pdf.addImage(imgData, 'png', topLeftMargin, - (pdfHeight * i) + (topLeftMargin * 4), canvasImageWidth, canvasImageHeight);
+          }
 
-        pdf.save(`Reporte_de_atencion_${new Date().toLocaleString()}.pdf`);
+          pdf.save(`Reporte_de_atencion_${new Date().toLocaleString()}.pdf`);
+
       });
       resolve('finished');
     })

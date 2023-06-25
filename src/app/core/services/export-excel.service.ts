@@ -21,6 +21,6 @@ export class ExportExcelService {
 
     // save to file
     XLSX.utils.book_append_sheet(workbook, ws, 'Sheet1');
-    XLSX.writeFile(workbook, `${fileName}${EXCEL_EXTENSION}`);
+    XLSX.writeFile(workbook, `${fileName}`);
   }
 }

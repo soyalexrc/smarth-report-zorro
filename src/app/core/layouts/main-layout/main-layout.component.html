@@ -68,7 +68,7 @@
         </a>
       </div>
       <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li nz-menu-item nzMatchRouter routerLink="/validacion-de-tickets" [ngStyle]="{'left': isCollapsed ? '-45px' : 0}">
+        <li *ngIf="!isServiceBoss" nz-menu-item nzMatchRouter routerLink="/validacion-de-tickets" [ngStyle]="{'left': isCollapsed ? '-45px' : 0}">
           <span nz-icon nzType="container" nzTheme="outline" style="margin-right: 1rem"></span>
           <span>Validacion de tickets</span>
         </li>
@@ -132,7 +132,7 @@
   >
     <ng-container *nzDrawerContent>
       <ul nz-menu nzTheme="dark" nzMode="inline" >
-      <li nz-menu-item nzMatchRouter routerLink="/validacion-de-tickets" >
+      <li *ngIf="!isServiceBoss" nz-menu-item nzMatchRouter routerLink="/validacion-de-tickets" >
         <span nz-icon nzType="container" nzTheme="outline" style="margin-right: 1rem"></span>
         <span>Validacion de tickets</span>
       </li>

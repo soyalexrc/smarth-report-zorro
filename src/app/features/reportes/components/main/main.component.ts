@@ -88,84 +88,67 @@ export class MainComponent implements OnInit, OnDestroy {
     console.log($event)
   }
 
-  getTickets(user = '') {
+  getTickets() {
     this.loading = true;
     const rangeOne = moment(this.isSmallScreen ? this.dateFrom : this.date[0]).format().slice(0, 10)
     const rangeTwo = moment(this.isSmallScreen ? this.dateTo : this.date[1]).format().slice(0, 10)
-
-    const validatedRangeOne = moment(this.isSmallScreen ? this.dateValidatedFrom : this.dateValidated[0]).format().slice(0, 10);
-    const validatedRangeTwo = moment(this.isSmallScreen ? this.dateValidatedTo : this.dateValidated[0]).format().slice(0, 10);
-
-    const customValidatedDate = `${validatedRangeOne}#${validatedRangeTwo}`;
-
-
     const customDate = `${rangeOne}#${rangeTwo}`
-
     const filters: any = [];
 
 
-    if (!this.getFilter(filters, 'C_FEC_CREA_FACE')) {
+    if (!this.getFilter(filters, 'fecha_creacion')) {
       if (Boolean((this.dateFrom && this.dateTo) || this.date)) {
         filters.push({
-          field: 'C_FEC_CREA_FACE',
+          field: 'fecha_creacion',
           value: customDate
         })
       }
     }
-    if (!this.getFilter(filters, 'fecha_creacion')) {
-      if (Boolean((this.dateValidatedFrom && this.dateValidatedTo) || this.dateValidated)) {
-        filters.push({
-          field: 'fecha_creacion',
-          value: customValidatedDate
-        })
-      }
-    }
 
-
-    if (!this.getFilter(filters, 'C_NRO_DOC_ADQUIRIENTE')) {
+    if (!this.getFilter(filters, 'numero_doc_adquiriente')) {
       if (this.dni) {
         filters.push({
-          field: 'C_NRO_DOC_ADQUIRIENTE',
+          field: 'numero_doc_adquiriente',
           value: this.dni
         })
       }
     }
 
-    if (!this.getFilter(filters, 'C_NRO_DOC')) {
+    if (!this.getFilter(filters, 'numero_documento')) {
       if (this.ticketNumber) {
         filters.push({
-          field: 'C_NRO_DOC',
+          field: 'numero_documento',
           value: this.ticketNumber
         })
       }
     }
-    if (!this.getFilter(filters, 'C_NRO_SERIE')) {
+    if (!this.getFilter(filters, 'descripcion_item')) {
       if (this.series) {
         filters.push({
-          field: 'C_NRO_SERIE',
+          field: 'descripcion_item',
           value: this.series.toUpperCase()
         })
       }
     }
-    if (!this.getFilter(filters, 'C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE')) {
+    if (!this.getFilter(filters, 'razon_social')) {
       if (this.name) {
         filters.push({
-          field: 'C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE',
+          field: 'razon_social',
           value: this.name
         })
       }
     }
-    if (!this.getFilter(filters, 'C_DESRIP_ITEM')) {
+    if (!this.getFilter(filters, 'descripcion_item')) {
       if (this.serviceName) {
         filters.push({
-          field: 'C_DESRIP_ITEM',
+          field: 'descripcion_item',
           value: this.serviceName
         })
       }
     }
 
 
-    this.tv.getTicketsByUserName(user ? user : this.user?.sub).subscribe(data => {
+    this.tv.getTicketsByUserNameAndFilters(this.userRoleToSearch ? this.userRoleToSearch : this.user?.sub, filters).subscribe(data => {
       this.listOfData = data;
       console.log(data);
       this.loading = false
@@ -239,12 +222,8 @@ export class MainComponent implements OnInit, OnDestroy {
     const role = this.user?.auth.replace('JEFE_', '')
       this.userService.getUsersByRole(role).subscribe(value => {
         this.listOfUsersByRole = value;
-        console.log(value)
+        console.log('value', value)
       }, _ => {}, () => this.rolesLoading = false)
-  }
-
-  handleSelectUserByRoleChange(event: any) {
-    this.getTickets(event);
   }
 
   get isServiceBoss() {

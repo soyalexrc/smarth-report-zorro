@@ -36,7 +36,7 @@
     <td>{{ data.C_FEC_CREA_FACE | date:'M/d/y ' }}</td>
     <td>
       <ul>
-        <li *ngFor="let item of data.C_DESRIP_ITEM.split('#')">{{item}}</li>
+        <li style="max-width: 200px;" *ngFor="let item of data.C_DESRIP_ITEM.split('#')">{{item}}</li>
       </ul>
     </td>
     <td>{{ data.C_MONEDA }}</td>

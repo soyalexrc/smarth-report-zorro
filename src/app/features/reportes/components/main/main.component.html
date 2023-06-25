@@ -15,11 +15,11 @@
       <button class="visible" (click)="open()" nzSize="large" nz-button nzType="default" nzShape="circle"><span
         nz-icon nzType="filter"></span></button>
       <div class="hidden">
-        <button nz-button nzType="link" (click)="exportToPdf()"
-                [nzLoading]="pdfLoading">
-          <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
-          Descargar PDF
-        </button>
+<!--        <button nz-button nzType="link" (click)="exportToPdf()"-->
+<!--                [nzLoading]="pdfLoading">-->
+<!--          <span nz-icon nzType="file-pdf" nzTheme="outline"></span>-->
+<!--          Descargar PDF-->
+<!--        </button>-->
         <button nz-button nzType="link" (click)="exportToExcel()"
                 [nzLoading]="excelLoading">
           <span nz-icon nzType="file-excel" nzTheme="outline"></span>
@@ -28,26 +28,22 @@
         </button>
       </div>
     </div>
-    <div class="visible" style="margin-bottom: 1rem">
-      <p style="font-weight: bold; margin-bottom: .5rem; color: gray">Buscar por usuario de servicio</p>
-      <nz-select (ngModelChange)="handleSelectUserByRoleChange($event)" nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading" style="width: 100%">
-        <nz-option [nzValue]="user.sub" [nzLabel]="user.sub"></nz-option>
+    <div class="visible" *ngIf="isServiceBoss" style="margin-bottom: 1rem">
+      <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading" style="width: 100%">
         <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
       </nz-select>
     </div>
-    <div class="hidden-block" style="margin-bottom: 1rem">
-      <p style="font-weight: bold; margin-bottom: .5rem; color: gray">Buscar por usuario de servicio</p>
-      <nz-select (ngModelChange)="handleSelectUserByRoleChange($event)" nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading" style="width: 25%">
-        <nz-option [nzValue]="user.sub" [nzLabel]="user.sub"></nz-option>
+    <div class="hidden-block" *ngIf="isServiceBoss" style="margin-bottom: 1rem">
+      <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading" style="width: 25%">
         <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
       </nz-select>
     </div>
     <div class="export-buttons">
-      <button  nz-button  nzType="primary" (click)="exportToPdf()"
-               [nzLoading]="pdfLoading">
-        <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
-        Descargar PDF
-      </button>
+<!--      <button  nz-button  nzType="primary" (click)="exportToPdf()"-->
+<!--               [nzLoading]="pdfLoading">-->
+<!--        <span nz-icon nzType="file-pdf" nzTheme="outline"></span>-->
+<!--        Descargar PDF-->
+<!--      </button>-->
       <button  nz-button  nzType="default" (click)="exportToExcel()"
                [nzLoading]="excelLoading">
         <span nz-icon nzType="file-excel" nzTheme="outline"></span>
@@ -55,12 +51,8 @@
 
       </button>
     </div>
-    <h3>Buscar por miembro del servicio</h3>
-    <nz-select style="width: 265px; margin-bottom: 1rem"  ngModel="lucy" nzLoading>
-      <nz-option  nzValue="lucy" nzLabel="Lucy"></nz-option>
-    </nz-select>
 
-    <div class="flex">
+    <div class="flex" >
       <nz-range-picker class="hidden" (keydown.enter)="getTickets()" [(ngModel)]="date" [nzPlaceHolder]="['Desde', 'Hasta']" (ngModelChange)="onChange($event)"></nz-range-picker>
       <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series"/>
       <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber"/>
