@@ -6,6 +6,7 @@ import {Ticket} from "../../../../core/interfaces/ticket";
 import {AuthService} from "../../../../core/services/auth.service";
 import {User} from "../../../../core/interfaces/auth";
 import {NzNotificationService} from "ng-zorro-antd/notification";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -39,7 +40,8 @@ export class MainComponent implements OnInit, OnDestroy {
     private modal: NzModalService,
     private authService: AuthService,
     private notification: NzNotificationService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) {
   }
 
@@ -47,6 +49,10 @@ export class MainComponent implements OnInit, OnDestroy {
     this.auth.validateSession();
 
     this.user = this.authService.getTokenDecoded()
+
+    if (this.user.auth.includes('ADMIN') || this.user.auth.includes('JEFE')) {
+      this.router.navigate(['/']);
+    }
     window.addEventListener('resize', () => {
       this.isSmallScreen = window.innerWidth < 1180;
     })
@@ -58,7 +64,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   onChange($event: any) {
-    console.log($event)
   }
 
   getTickets() {
@@ -155,7 +160,6 @@ export class MainComponent implements OnInit, OnDestroy {
     const t = {...ticket};
     t.username = this.user.sub;
     this.tv.validateTicket(t).subscribe(data => {
-      console.log(data)
       this.showNotification()
       this.getTickets()
     })
@@ -166,7 +170,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   handleSample(e: any) {
-    console.log(e);
   }
 
   open(): void {

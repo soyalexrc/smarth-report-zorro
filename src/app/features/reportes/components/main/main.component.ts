@@ -7,7 +7,7 @@ import {AuthService} from "../../../../core/services/auth.service";
 import {Ticket} from "../../../../core/interfaces/ticket";
 import {User, UserByRole} from "../../../../core/interfaces/auth";
 import {ExportPdfService} from "../../../../core/services/export-pdf.service";
-import {Subscription} from "rxjs";
+import {map, Subscription} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {UserService} from "../../../../core/services/user.service";
 import {handleCustomCurrencyFormat} from "../../../../shared/utils";
@@ -30,10 +30,13 @@ export class MainComponent implements OnInit, OnDestroy {
   pdfLoading = false;
   excelLoading = false;
   rolesLoading = false;
+  servicesLoading = false;
 
   userRoleToSearch: any;
+  serviceToSearch: any;
   listOfData: Ticket[] = [];
   listOfUsersByRole: UserByRole[] = [];
+  listOfServices: any = [];
   loading = false;
   confirmModal?: NzModalRef; // For testing by now
   user!: User;
@@ -64,13 +67,17 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isBoss = this.auth.isBoss();
     this.auth.validateSession();
     this.user = this.authService.getTokenDecoded()
-    if (this.isBoss) {
+    if (this.isServiceBoss) {
       this.getUsersByRole();
     }
-    this.getTickets()
+    if (this.isAdmin) {
+      this.getServices();
+    }
+    if (!this.isServiceBoss && !this.isAdmin) {
+      this.getTickets()
+    }
     this.exportableStateSubscription = this.pdfService.exportableState
       .subscribe(value => {
         this.showTable = value
@@ -88,7 +95,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
 
   onChange($event: any) {
-    console.log($event)
   }
 
   getTickets() {
@@ -156,10 +162,17 @@ export class MainComponent implements OnInit, OnDestroy {
 
     localStorage.setItem('request-info', JSON.stringify(requestInfo));
 
+    if (this.isAdmin) {
+      this.tv.getTicketsByService(this.serviceToSearch).subscribe(result => {
+        this.listOfData = result;
+        this.loading = false
+      })
+      return;
+    }
+
 
     this.tv.getTicketsByUserNameAndFilters(this.userRoleToSearch ? this.userRoleToSearch : this.user?.sub, filters).subscribe(data => {
       this.listOfData = data;
-      console.log(data);
       this.loading = false
     })
   }
@@ -235,11 +248,29 @@ export class MainComponent implements OnInit, OnDestroy {
     const role = this.user?.auth.replace('JEFE_', '')
       this.userService.getUsersByRole(role).subscribe(value => {
         this.listOfUsersByRole = value;
-        console.log('value', value)
       }, _ => {}, () => this.rolesLoading = false)
+  }
+
+  getServices() {
+    this.servicesLoading = true;
+    const role = this.user?.auth.replace('JEFE_', '')
+    this.userService.getServices().subscribe(value => {
+      this.listOfServices =  value.filter((service: string) => !service.includes('JEFE') && !service.includes('ADMIN') && !service.includes('USER') );
+    }, _ => {}, () => this.servicesLoading = false)
   }
 
   get isServiceBoss() {
     return this.user.auth.includes('JEFE');
+  }
+
+  get isAdmin() {
+    return this.user.auth.includes('ADMIN');
+  }
+
+  formatServiceDisplay(service: string) {
+    const initial = service.charAt(0);
+    const content = service.slice(1, service.length).toLowerCase();
+    const result = initial + content;
+    return  result.replace('ROLE', '').replace('_', ' ')
   }
 }

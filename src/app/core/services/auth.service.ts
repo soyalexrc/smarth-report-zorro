@@ -73,4 +73,8 @@ export class AuthService {
     return this.getTokenDecoded()?.auth.includes('JEFE');
   }
 
+  isAdmin() {
+    return this.getTokenDecoded()?.auth.includes('ADMIN');
+  }
+
 }

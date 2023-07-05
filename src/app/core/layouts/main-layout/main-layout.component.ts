@@ -24,7 +24,6 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
       nameShort: userRaw.sub?.slice(0, 2).toUpperCase(),
       role: userRaw.auth?.split(',').map(this.formatRole)
     }
-    console.log(userRaw.auth.split(','))
     window.addEventListener('resize', () => {
       this.isSmallScreen = window.innerWidth < 900;
     })
@@ -58,6 +57,6 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   get isServiceBoss() {
-    return this.user.role[0].includes('JEFE');
+    return this.user.role[0].includes('JEFE') || this.user.role[0].includes('ADMIN');
   }
 }

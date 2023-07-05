@@ -16,7 +16,6 @@ export class ExportExcelService {
     // generate workbook and add the worksheet
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(elements);
     ws['!cols'] = [{wch: 20}, {wch: 50}, {wch: 15}, {wch: 22}, {wch: 50}, {wch: 10}, {wch: 10}, {wch: 10}, {wch: 10}]
-    console.log(ws)
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
 
     // save to file

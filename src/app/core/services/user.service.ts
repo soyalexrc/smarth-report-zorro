@@ -15,4 +15,8 @@ export class UserService {
   getUsersByRole(role: string): Observable<any> {
     return this.http.get(`${this.basePath}/admin/users/role/${role}` )
   }
+
+  getServices(): Observable<any> {
+    return this.http.get(`${this.basePath}/authorities` )
+  }
 }

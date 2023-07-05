@@ -4,14 +4,14 @@
   <nz-breadcrumb>
     <nz-breadcrumb-item>Inicio</nz-breadcrumb-item>
     <nz-breadcrumb-item>
-      <a>{{isServiceBoss ? 'Reportes de servicio' : 'Reportes'}}</a>
+      <a>{{(isServiceBoss || isAdmin) ? 'Reportes de servicio' : 'Reportes'}}</a>
     </nz-breadcrumb-item>
   </nz-breadcrumb>
 
 
   <div class="container">
     <div style="display: flex; justify-content: space-between; margin: 1rem 0">
-        <h1>{{isServiceBoss ? 'Reportes de servicio' : 'Reportes'}}</h1>
+        <h1>{{(isServiceBoss || isAdmin) ? 'Reportes de servicio' : 'Reportes'}}</h1>
       <button class="visible" (click)="open()" nzSize="large" nz-button nzType="default" nzShape="circle"><span
         nz-icon nzType="filter"></span></button>
       <div class="hidden">
@@ -27,7 +27,20 @@
 
         </button>
       </div>
+
+
     </div>
+    <div class="visible" *ngIf="isAdmin" style="margin-bottom: 1rem">
+      <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="serviceToSearch" [nzLoading]="servicesLoading" style="width: 100%">
+        <nz-option *ngFor="let service of listOfServices" [nzValue]="service" [nzLabel]="formatServiceDisplay(service)"></nz-option>
+      </nz-select>
+    </div>
+    <div class="hidden-block" *ngIf="isAdmin" style="margin-bottom: 1rem">
+      <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="serviceToSearch" [nzLoading]="servicesLoading" style="width: 25%">
+        <nz-option *ngFor="let service of listOfServices" [nzValue]="service" [nzLabel]="formatServiceDisplay(service)"></nz-option>
+      </nz-select>
+    </div>
+
     <div class="visible" *ngIf="isServiceBoss" style="margin-bottom: 1rem">
       <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading" style="width: 100%">
         <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
