@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Ticket} from "../../../core/interfaces/ticket";
+import {handleCustomCurrencyFormat} from "../../utils";
 
 
 @Component({
@@ -32,4 +33,6 @@ export class TicketTableComponent {
     return data.length
   }
 
+
+  protected readonly handleCustomCurrencyFormat = handleCustomCurrencyFormat;
 }

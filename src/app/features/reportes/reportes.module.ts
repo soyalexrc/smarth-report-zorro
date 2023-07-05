@@ -16,6 +16,7 @@ import {NzSpinModule} from "ng-zorro-antd/spin";
 import {NzAlertModule} from "ng-zorro-antd/alert";
 import {NzDrawerModule} from "ng-zorro-antd/drawer";
 import {NzSelectModule} from "ng-zorro-antd/select";
+import { ExportPdfComponent } from './components/export-pdf/export-pdf.component';
 
 
 const routes: Route[]  = [
@@ -27,7 +28,8 @@ const routes: Route[]  = [
 
 @NgModule({
   declarations: [
-    MainComponent
+    MainComponent,
+    ExportPdfComponent
   ],
     imports: [
         CommonModule,

@@ -82,6 +82,10 @@ export class ExportPdfService {
     })
   }
 
+  exportSimplePdf() {
+    window.print();
+  }
+
   updateExportableState(value: boolean) {
     this.exportableState.next(value);
   }

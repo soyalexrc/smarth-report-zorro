@@ -1,0 +1,38 @@
+th,  td {
+  border: 1px solid lightgray;
+}
+
+.space-horizontal {
+  padding: 0 1rem;
+}
+
+.space-horizontal-2x {
+  padding: 0 2rem;
+}
+
+.space {
+  padding: 1rem;
+}
+
+table {
+  font-size: 8pt;
+  display: none;
+}
+
+.print-button {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media print {
+  .print-button {
+    display:  none;
+  }
+  table {
+    display: block;
+  }
+}
+

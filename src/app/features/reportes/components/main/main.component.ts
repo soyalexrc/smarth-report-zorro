@@ -10,6 +10,8 @@ import {ExportPdfService} from "../../../../core/services/export-pdf.service";
 import {Subscription} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {UserService} from "../../../../core/services/user.service";
+import {handleCustomCurrencyFormat} from "../../../../shared/utils";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-main',
@@ -56,7 +58,8 @@ export class MainComponent implements OnInit, OnDestroy {
     private pdfService: ExportPdfService,
     private message: NzMessageService,
     private auth: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
   ) {
   }
 
@@ -146,6 +149,12 @@ export class MainComponent implements OnInit, OnDestroy {
         })
       }
     }
+    const requestInfo = {
+      filters,
+      user: this.userRoleToSearch ? this.userRoleToSearch : this.user?.sub
+    }
+
+    localStorage.setItem('request-info', JSON.stringify(requestInfo));
 
 
     this.tv.getTicketsByUserNameAndFilters(this.userRoleToSearch ? this.userRoleToSearch : this.user?.sub, filters).subscribe(data => {
@@ -164,9 +173,9 @@ export class MainComponent implements OnInit, OnDestroy {
         "Fecha": data.C_FEC_CREA_FACE,
         "Servicio": data.C_DESRIP_ITEM,
         "Moneda": data.C_MONEDA,
-        "Monto": data.C_TOTAL_OPERACIONES_GRAV,
-        "IGV": data.C_MONTO_TOTAL_IGV,
-        "Total": data.C_MONTO_PAGAR
+        "Monto": handleCustomCurrencyFormat(data.C_TOTAL_OPERACIONES_GRAV, 'double'),
+        "IGV": handleCustomCurrencyFormat(data.C_MONTO_TOTAL_IGV, 'double'),
+        "Total": handleCustomCurrencyFormat(data.C_MONTO_PAGAR, 'double')
       }
     })
     this.excelService.exportToExcel(
@@ -176,21 +185,25 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   exportToPdf() {
-    this.showLoader = true
-    this.pdfService.updateExportableState(true)
-    setTimeout(() => {
-      const pages = document.querySelector('.all-pages') as HTMLElement;
-      this.pdfService.exportToPdfWithCanvas(pages).then(() => {
-        this.pdfService.updateExportableState(false)
-        this.showLoader = false
-        this.message.create('success', 'Se descargo el pdf con exito!', {})
-      });
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['/export-pdf'])
+    );
+    window.open(url, '_blank')
+    // this.showLoader = true
+    // this.pdfService.updateExportableState(true)
+    // setTimeout(() => {
+    //   const pages = document.querySelector('.all-pages') as HTMLElement;
+    //   this.pdfService.exportToPdfWithCanvas(pages).then(() => {
+    //     this.pdfService.updateExportableState(false)
+    //     this.showLoader = false
+    //     this.message.create('success', 'Se descargo el pdf con exito!', {})
+    //   });
       // this.pdfService.exportAllToPdf(pages).then(() => {
       //   this.pdfService.updateExportableState(false)
       //   this.showLoader = false
       //   this.message.create('success', 'Se descargo el pdf con exito!', {})
       // })
-    }, 1000)
+    // }, 1000)
   }
 
   getFilter(filters: any, param: string) {

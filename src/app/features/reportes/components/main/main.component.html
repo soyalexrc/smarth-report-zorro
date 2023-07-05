@@ -15,11 +15,11 @@
       <button class="visible" (click)="open()" nzSize="large" nz-button nzType="default" nzShape="circle"><span
         nz-icon nzType="filter"></span></button>
       <div class="hidden">
-<!--        <button nz-button nzType="link" (click)="exportToPdf()"-->
-<!--                [nzLoading]="pdfLoading">-->
-<!--          <span nz-icon nzType="file-pdf" nzTheme="outline"></span>-->
-<!--          Descargar PDF-->
-<!--        </button>-->
+        <button nz-button nzType="link" (click)="exportToPdf()"
+                [nzLoading]="pdfLoading">
+          <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
+          Descargar PDF
+        </button>
         <button nz-button nzType="link" (click)="exportToExcel()"
                 [nzLoading]="excelLoading">
           <span nz-icon nzType="file-excel" nzTheme="outline"></span>
@@ -39,11 +39,11 @@
       </nz-select>
     </div>
     <div class="export-buttons">
-<!--      <button  nz-button  nzType="primary" (click)="exportToPdf()"-->
-<!--               [nzLoading]="pdfLoading">-->
-<!--        <span nz-icon nzType="file-pdf" nzTheme="outline"></span>-->
-<!--        Descargar PDF-->
-<!--      </button>-->
+      <button  nz-button  nzType="primary" (click)="exportToPdf()"
+               [nzLoading]="pdfLoading">
+        <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
+        Descargar PDF
+      </button>
       <button  nz-button  nzType="default" (click)="exportToExcel()"
                [nzLoading]="excelLoading">
         <span nz-icon nzType="file-excel" nzTheme="outline"></span>
@@ -121,7 +121,7 @@
           <th style="padding-bottom: .5rem; border-right: 1px solid black">Total</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="content">
         <tr style="border-bottom: 1px solid black; border-left: 1px solid black" *ngFor="let data of listOfData">
           <td style="width: 100px; border-right: 1px solid black; text-align: center">{{ data.C_NRO_SERIE }}
             - {{data.C_NRO_DOC}}</td>

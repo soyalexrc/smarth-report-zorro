@@ -40,9 +40,9 @@
       </ul>
     </td>
     <td>{{ data.C_MONEDA }}</td>
-    <td>{{ data.C_TOTAL_OPERACIONES_GRAV }}</td>
-    <td>{{ data.C_MONTO_TOTAL_IGV }}</td>
-    <td>{{ data.C_MONTO_PAGAR }}</td>
+    <td>{{ handleCustomCurrencyFormat(data.C_TOTAL_OPERACIONES_GRAV)}}</td>
+    <td>{{ handleCustomCurrencyFormat(data.C_MONTO_TOTAL_IGV )}}</td>
+    <td>{{ handleCustomCurrencyFormat(data.C_MONTO_PAGAR)}}</td>
   </tr>
   </tbody>
 </nz-table>
