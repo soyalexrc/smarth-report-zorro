@@ -57,6 +57,6 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   get isServiceBoss() {
-    return this.user.role[0].includes('JEFE') || this.user.role[0].includes('ADMIN');
+    return this.user.role[0].includes('SERVICIO') || this.user.role[0].includes('ADMIN');
   }
 }

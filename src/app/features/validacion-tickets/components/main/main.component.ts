@@ -50,7 +50,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.user = this.authService.getTokenDecoded()
 
-    if (this.user.auth.includes('ADMIN') || this.user.auth.includes('JEFE')) {
+    if (this.user.auth.includes('ADMIN') || this.user.auth.includes('SERVICIO')) {
       this.router.navigate(['/']);
     }
     window.addEventListener('resize', () => {

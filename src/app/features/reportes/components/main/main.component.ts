@@ -245,7 +245,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   getUsersByRole() {
     this.rolesLoading = true;
-    const role = this.user?.auth.replace('JEFE_', '')
+    const role = this.user?.auth.replace('SERVICIO_', '')
       this.userService.getUsersByRole(role).subscribe(value => {
         this.listOfUsersByRole = value;
       }, _ => {}, () => this.rolesLoading = false)
@@ -253,14 +253,14 @@ export class MainComponent implements OnInit, OnDestroy {
 
   getServices() {
     this.servicesLoading = true;
-    const role = this.user?.auth.replace('JEFE_', '')
+    const role = this.user?.auth.replace('SERVICIO_', '')
     this.userService.getServices().subscribe(value => {
-      this.listOfServices =  value.filter((service: string) => !service.includes('JEFE') && !service.includes('ADMIN') && !service.includes('USER') );
+      this.listOfServices =  value.filter((service: string) => !service.includes('SERVICIO') && !service.includes('ADMIN') && !service.includes('USER') );
     }, _ => {}, () => this.servicesLoading = false)
   }
 
   get isServiceBoss() {
-    return this.user.auth.includes('JEFE');
+    return this.user.auth.includes('SERVICIO');
   }
 
   get isAdmin() {

@@ -70,7 +70,7 @@ export class AuthService {
   }
 
   isBoss() {
-    return this.getTokenDecoded()?.auth.includes('JEFE');
+    return this.getTokenDecoded()?.auth.includes('SERVICIO');
   }
 
   isAdmin() {
