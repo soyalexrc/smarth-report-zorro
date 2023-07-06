@@ -1,6 +1,6 @@
 <div class="print-button">
-  <button  (click)="handlePrint()" nzSize="large" nz-button nzType="primary" >
-    Imprimir
+  <button [disabled]="ticketsToReport.length < 1" (click)="handlePrint()" nzSize="large" nz-button nzType="primary" >
+    {{ticketsToReport.length > 0 ? 'Imprimir' : 'Cargando informacion...'}}
   </button>
 </div>
 <table style="margin: 1rem">

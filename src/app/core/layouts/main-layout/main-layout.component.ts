@@ -59,4 +59,9 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   get isServiceBoss() {
     return this.user.role[0].includes('SERVICIO') || this.user.role[0].includes('ADMIN');
   }
+
+  handleRouting() {
+    this.visible = false;
+    // this.router.navigate([route]);
+  }
 }

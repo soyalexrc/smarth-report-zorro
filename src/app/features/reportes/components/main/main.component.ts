@@ -167,14 +167,14 @@ export class MainComponent implements OnInit, OnDestroy {
         this.listOfData = result;
         this.loading = false
       })
-      return;
+    } else {
+      this.tv.getTicketsByUserNameAndFilters(this.userRoleToSearch ? this.userRoleToSearch : this.user?.sub, filters).subscribe(data => {
+        this.listOfData = data;
+        this.loading = false
+      })
     }
 
-
-    this.tv.getTicketsByUserNameAndFilters(this.userRoleToSearch ? this.userRoleToSearch : this.user?.sub, filters).subscribe(data => {
-      this.listOfData = data;
-      this.loading = false
-    })
+    this.visible = false;
   }
 
   exportToExcel() {

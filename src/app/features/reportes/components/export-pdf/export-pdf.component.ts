@@ -23,11 +23,6 @@ export class ExportPdfComponent implements OnInit {
     const requestInfo = JSON.parse(localStorage.getItem('request-info') ?? '');
     this.ticketService.getTicketsByUserNameAndFilters(requestInfo.user, requestInfo.filters).subscribe(response => {
       this.ticketsToReport = response;
-      if (response.length > 0) {
-        setTimeout(() => {
-          this.pdfService.exportSimplePdf();
-        }, 1000)
-      }
     })
   }
 

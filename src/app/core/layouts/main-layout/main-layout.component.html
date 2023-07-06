@@ -132,11 +132,11 @@
   >
     <ng-container *nzDrawerContent>
       <ul nz-menu nzTheme="dark" nzMode="inline" >
-      <li *ngIf="!isServiceBoss" nz-menu-item nzMatchRouter routerLink="/validacion-de-tickets" >
+      <li *ngIf="!isServiceBoss" nz-menu-item nzMatchRouter (click)="handleRouting()" routerLink="/validacion-de-tickets" >
         <span nz-icon nzType="container" nzTheme="outline" style="margin-right: 1rem"></span>
         <span>Validacion de tickets</span>
       </li>
-      <li nz-menu-item nzMatchRouter routerLink="/reportes" >
+      <li nz-menu-item nzMatchRouter (click)="handleRouting()" routerLink="/reportes" >
         <span nz-icon nzType="dashboard" nzTheme="outline" style="margin-right: 1rem"></span>
         <span>{{isServiceBoss ? 'Reportes de servicio' : 'Reportes'}}</span>
       </li>
