@@ -1,4 +1,4 @@
-<nz-spin [nzSpinning]="showLoader" nzTip="Descargando pdf...">
+<!--<nz-spin [nzSpinning]="showLoader" >-->
 
 
   <nz-breadcrumb>
@@ -9,7 +9,7 @@
   </nz-breadcrumb>
 
 
-  <div class="container">
+  <div class="container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')">
     <div style="display: flex; justify-content: space-between; margin: 1rem 0">
         <h1>{{(isServiceBoss || isAdmin) ? 'Reportes de servicio' : 'Reportes'}}</h1>
       <button class="visible" (click)="open()" nzSize="large" nz-button nzType="default" nzShape="circle"><span
@@ -124,6 +124,6 @@
   </div>
 
 
-</nz-spin>
+<!--</nz-spin>-->
 
 

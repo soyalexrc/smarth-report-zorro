@@ -7,6 +7,7 @@ import {AuthService} from "../../../../core/services/auth.service";
 import {User} from "../../../../core/interfaces/auth";
 import {NzNotificationService} from "ng-zorro-antd/notification";
 import {Router} from "@angular/router";
+import {UiService} from "../../../../core/services/ui.service";
 
 
 @Component({
@@ -32,6 +33,9 @@ export class MainComponent implements OnInit, OnDestroy {
   visible = false;
   isSmallScreen = window.innerWidth < 1180;
 
+  private swipeCoord?: [number, number];
+  private swipeTime?: number;
+
 
   @ViewChild('notificationTemplate') notificationTemplate!: TemplateRef<any>
 
@@ -41,7 +45,8 @@ export class MainComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private notification: NzNotificationService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private uiService: UiService
   ) {
   }
 
@@ -73,7 +78,6 @@ export class MainComponent implements OnInit, OnDestroy {
     const rangeTwo = moment(this.isSmallScreen ? this.dateTo : this.date[1]).format().slice(0, 10)
 
     const customDate = `${rangeOne}#${rangeTwo}`
-
 
 
     const filters: any = [];
@@ -182,5 +186,30 @@ export class MainComponent implements OnInit, OnDestroy {
 
   get isAdmin() {
     return this.user.auth.includes('ADMIN');
+  }
+
+  swipe(e: TouchEvent, when: string): void {
+    const coord: [number, number] = [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
+    const time = new Date().getTime();
+
+    if (when === 'start') {
+      this.swipeCoord = coord;
+      this.swipeTime = time;
+    } else if (when === 'end') {
+      const direction = [coord[0] - this.swipeCoord![0], coord[1] - this.swipeCoord![1]];
+      const duration = time - this.swipeTime!;
+
+      if (duration < 1000 //
+        && Math.abs(direction[0]) > 30 // Long enough
+        && Math.abs(direction[0]) > Math.abs(direction[1] * 3)) { // Horizontal enough
+        const swipe = direction[0] < 0 ? 'next' : 'previous';
+        if (swipe === 'next') {
+          this.visible = true;
+        } else {
+          this.uiService.showLayoutDrawer();
+        }
+      }
+
+    }
   }
 }

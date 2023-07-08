@@ -5,7 +5,7 @@
   </nz-breadcrumb-item>
 </nz-breadcrumb>
 
-<div class="container">
+<div class="container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')">
   <div style="display: flex; justify-content: space-between; align-items: center; margin: 1rem 0">
     <h1 style="margin: 0px">Validacion de tickets</h1>
     <button class="visible" (click)="open()" nzSize="large" nz-button nzType="default" nzShape="circle"><span nz-icon nzType="filter"></span></button>

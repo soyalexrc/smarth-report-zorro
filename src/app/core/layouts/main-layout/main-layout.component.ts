@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
 import {Router} from "@angular/router";
+import {UiService} from "../../services/ui.service";
 
 @Component({
   selector: 'app-main-layout',
@@ -14,10 +15,18 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   confirmModal?: NzModalRef; // For testing by now
   visible = false;
   isSmallScreen = window.innerWidth < 900;
-  constructor(private auth: AuthService, private modal: NzModalService, private router: Router) {
+  constructor(
+    private auth: AuthService,
+    private modal: NzModalService,
+    private router: Router,
+    private uiService: UiService
+  ) {
   }
 
   ngOnInit() {
+    this.uiService.isLayoutDrawerVisible.subscribe(value => {
+      this.visible = value;
+    });
     const userRaw = this.auth.getTokenDecoded();
     this.user = {
       name: userRaw.sub,
@@ -45,11 +54,11 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   open(): void {
-    this.visible = true;
+    this.uiService.showLayoutDrawer();
   }
 
   close(): void {
-    this.visible = false;
+    this.uiService.hideLayoutDrawer();
   }
 
   formatRole(role: string) {
@@ -61,7 +70,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   handleRouting() {
-    this.visible = false;
+    this.uiService.hideLayoutDrawer();
     // this.router.navigate([route]);
   }
 }
