@@ -21,6 +21,7 @@
         nzPopconfirmTitle="Validar ticket?"
         nzPopconfirmPlacement="bottom"
         disabled
+        nzAutofocus="ok"
         (nzOnConfirm)="confirm.emit(data)"
         (nzOnCancel)="cancel.emit()"
         *ngIf="showValidationFunction && data.status !== 'CHECKED' "
@@ -58,6 +59,7 @@
           nzPopconfirmTitle="Validar ticket?"
           nzPopconfirmPlacement="bottom"
           disabled
+          nzAutofocus="ok"
           (nzOnConfirm)="confirm.emit(item)"
           (nzOnCancel)="cancel.emit()"
           *ngIf="showValidationFunction && item.status !== 'CHECKED' "

@@ -150,6 +150,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   confirm(row: Ticket): void {
     this.confirmModal = this.modal.confirm({
+      nzAutofocus: 'ok',
       nzTitle: `Quieres validar el ticket ${row.C_NRO_SERIE} - ${row.C_NRO_DOC}?`,
       nzContent: 'Una vez validado solo podra cambiar el estado mediante el administrador',
       // nzOnOk: () =>
