@@ -108,6 +108,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   getTickets() {
+    this.uiService.updateGlobalLoading(true);
     this.loading = true;
     const rangeOne = moment(this.isSmallScreen ? this.dateFrom : this.date[0]).format().slice(0, 10)
     const rangeTwo = moment(this.isSmallScreen ? this.dateTo : this.date[1]).format().slice(0, 10)
@@ -174,14 +175,23 @@ export class MainComponent implements OnInit, OnDestroy {
 
     if (this.isAdmin) {
       this.tv.getTicketsByServiceWithFilters(this.serviceToSearch, filters).subscribe(result => {
-        console.log(result);
         this.listOfData = result;
+      }, () => {
         this.loading = false
+        this.uiService.updateGlobalLoading(false);
+      }, () => {
+        this.loading = false
+        this.uiService.updateGlobalLoading(false);
       })
     } else {
       this.tv.getTicketsByUserNameAndFilters(this.userRoleToSearch ? this.userRoleToSearch : this.user?.sub, filters).subscribe(data => {
         this.listOfData = data;
+      }, () => {
         this.loading = false
+        this.uiService.updateGlobalLoading(false);
+      }, () => {
+        this.loading = false
+        this.uiService.updateGlobalLoading(false);
       })
     }
 

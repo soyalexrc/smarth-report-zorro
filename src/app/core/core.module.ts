@@ -12,6 +12,8 @@ import {NzDrawerModule} from "ng-zorro-antd/drawer";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzAvatarModule} from "ng-zorro-antd/avatar";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
+import {NzSpinModule} from "ng-zorro-antd/spin";
+import {NzTypographyModule} from "ng-zorro-antd/typography";
 // import {HTTP_INTERCEPTORS} from "@angular/common/http";
 // import {AuthInterceptor} from "./interceptor/auth.interceptor";
 
@@ -31,7 +33,9 @@ import {NzDropDownModule} from "ng-zorro-antd/dropdown";
     NzDrawerModule,
     NzButtonModule,
     NzAvatarModule,
-    NzDropDownModule
+    NzDropDownModule,
+    NzSpinModule,
+    NzTypographyModule
   ],
   providers: [
     AuthGuard,

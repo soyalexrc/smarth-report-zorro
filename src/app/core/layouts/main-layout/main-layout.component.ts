@@ -15,6 +15,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   confirmModal?: NzModalRef; // For testing by now
   visible = false;
   isSmallScreen = window.innerWidth < 900;
+  loading!: boolean;
   constructor(
     private auth: AuthService,
     private modal: NzModalService,
@@ -27,6 +28,9 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     this.uiService.isLayoutDrawerVisible.subscribe(value => {
       this.visible = value;
     });
+    this.uiService.globalLoading.subscribe(value => {
+      this.loading = value;
+    })
     const userRaw = this.auth.getTokenDecoded();
     this.user = {
       name: userRaw.sub,

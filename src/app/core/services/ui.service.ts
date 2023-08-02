@@ -7,6 +7,7 @@ import {BehaviorSubject} from "rxjs";
 export class UiService {
 
   isLayoutDrawerVisible = new BehaviorSubject<boolean>(false);
+  globalLoading = new BehaviorSubject<boolean>(false);
 
   constructor() { }
 
@@ -18,8 +19,8 @@ export class UiService {
     this.isLayoutDrawerVisible.next(false);
   }
 
-  toggleLayoutDrawer() {
-    this.isLayoutDrawerVisible.next(!this.isLayoutDrawerVisible);
+  updateGlobalLoading(value: boolean) {
+    this.globalLoading.next(value);
   }
 
 }

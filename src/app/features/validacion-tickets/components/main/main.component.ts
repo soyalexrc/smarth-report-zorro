@@ -79,6 +79,7 @@ export class MainComponent implements OnInit, OnDestroy {
   getTickets() {
     this.visible = false;
     this.loading = true;
+    this.uiService.updateGlobalLoading(true);
     const rangeOne = moment(this.isSmallScreen ? this.dateFrom : this.date[0]).format().slice(0, 10)
     const rangeTwo = moment(this.isSmallScreen ? this.dateTo : this.date[1]).format().slice(0, 10)
 
@@ -140,6 +141,11 @@ export class MainComponent implements OnInit, OnDestroy {
     }
     this.tv.getTickets(filters).subscribe(data => {
       this.listOfData = data;
+    }, () => {
+      this.uiService.updateGlobalLoading(false);
+      this.loading = false
+    }, () => {
+      this.uiService.updateGlobalLoading(false);
       this.loading = false
     })
   }
