@@ -100,6 +100,11 @@ export class MainComponent implements OnInit, OnDestroy {
 
 
   onChange($event: any) {
+    if ($event.length === 0) {
+      this.date = '';
+      this.dateFrom = '';
+      this.dateTo = '';
+    }
   }
 
   getTickets() {
@@ -168,7 +173,8 @@ export class MainComponent implements OnInit, OnDestroy {
     localStorage.setItem('request-info', JSON.stringify(requestInfo));
 
     if (this.isAdmin) {
-      this.tv.getTicketsByService(this.serviceToSearch).subscribe(result => {
+      this.tv.getTicketsByServiceWithFilters(this.serviceToSearch, filters).subscribe(result => {
+        console.log(result);
         this.listOfData = result;
         this.loading = false
       })

@@ -14,4 +14,5 @@ export interface Ticket {
   C_FEC_CREA_FACE: string
   C_ID_ITEM: string | number
   C_DESRIP_ITEM: string
+  created_date?: Date
 }

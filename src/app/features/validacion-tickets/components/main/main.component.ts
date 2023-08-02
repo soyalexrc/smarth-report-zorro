@@ -69,6 +69,11 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   onChange($event: any) {
+    if ($event.length === 0) {
+      this.date = '';
+      this.dateFrom = '';
+      this.dateTo = '';
+    }
   }
 
   getTickets() {
