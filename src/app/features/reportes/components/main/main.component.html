@@ -1,127 +1,158 @@
 <!--<nz-spin [nzSpinning]="showLoader" >-->
 
 
-  <nz-breadcrumb>
-    <nz-breadcrumb-item>Inicio</nz-breadcrumb-item>
-    <nz-breadcrumb-item>
-      <a>{{(isServiceBoss || isAdmin) ? 'Reportes de servicio' : 'Reportes'}}</a>
-    </nz-breadcrumb-item>
-  </nz-breadcrumb>
+<nz-breadcrumb>
+  <nz-breadcrumb-item>Inicio</nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <a>{{(isServiceBoss || isAdmin) ? 'Reportes de servicio' : 'Reportes'}}</a>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
 
 
-  <div class="container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')">
-    <div style="display: flex; justify-content: space-between; margin: 1rem 0">
-        <h1>{{(isServiceBoss || isAdmin) ? 'Reportes de servicio' : 'Reportes'}}</h1>
-      <button class="visible" (click)="open()" nzSize="large" nz-button nzType="default" nzShape="circle"><span
-        nz-icon nzType="filter"></span></button>
-      <div class="hidden">
-        <button nz-button nzType="link" (click)="exportToPdf()"
-                [nzLoading]="pdfLoading">
-          <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
-          Descargar PDF
-        </button>
-        <button nz-button nzType="link" (click)="exportToExcel()"
-                [nzLoading]="excelLoading">
-          <span nz-icon nzType="file-excel" nzTheme="outline"></span>
-          Descargar Excel
-
-        </button>
-      </div>
-
-
-    </div>
-
-    <div class="hidden-block" *ngIf="isAdmin" style="margin-bottom: 1rem">
-      <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="serviceToSearch" [nzLoading]="servicesLoading" style="width: 25%">
-        <nz-option *ngFor="let service of listOfServices" [nzValue]="service" [nzLabel]="formatServiceDisplay(service)"></nz-option>
-      </nz-select>
-    </div>
-
-
-    <div class="hidden-block" *ngIf="isServiceBoss" style="margin-bottom: 1rem">
-      <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading" style="width: 25%">
-        <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
-      </nz-select>
-    </div>
-    <div class="export-buttons">
-      <button  nz-button  nzType="primary" (click)="exportToPdf()"
-               [nzLoading]="pdfLoading">
+<div class="container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')">
+  <div style="display: flex; justify-content: space-between; margin: 1rem 0">
+    <h1>{{(isServiceBoss || isAdmin) ? 'Reportes de servicio' : 'Reportes'}}</h1>
+    <button class="visible" (click)="open()" nzSize="large" nz-button nzType="default" nzShape="circle"><span
+      nz-icon nzType="filter"></span></button>
+    <div class="hidden">
+      <button nz-button nzType="link" (click)="exportToPdf()"
+              [nzLoading]="pdfLoading">
         <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
         Descargar PDF
       </button>
-      <button  nz-button  nzType="default" (click)="exportToExcel()"
-               [nzLoading]="excelLoading">
+      <button nz-button nzType="link" (click)="exportToExcel()"
+              [nzLoading]="excelLoading">
         <span nz-icon nzType="file-excel" nzTheme="outline"></span>
         Descargar Excel
 
       </button>
     </div>
 
-    <div class="flex" >
-      <nz-range-picker class="hidden" (keydown.enter)="getTickets()" [(ngModel)]="date" [nzPlaceHolder]="['Desde', 'Hasta']" (ngModelChange)="onChange($event)"></nz-range-picker>
-      <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie" [(ngModel)]="series"/>
-      <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber"/>
 
-      <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente" [(ngModel)]="name"/>
-      <input class="hidden" (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente" [(ngModel)]="dni"/>
-      <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion" [(ngModel)]="serviceName"/>
-      <button class="search-button hidden" nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
+  </div>
+
+  <div class="hidden-block" *ngIf="isAdmin" style="margin-bottom: 1rem">
+    <nz-select nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="serviceToSearch"
+               [nzLoading]="servicesLoading" style="width: 25%">
+      <nz-option *ngFor="let service of listOfServices" [nzValue]="service"
+                 [nzLabel]="formatServiceDisplay(service)"></nz-option>
+    </nz-select>
+  </div>
+
+
+  <div class="hidden-block" *ngIf="isServiceBoss" style="margin-bottom: 1rem">
+    <nz-select nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading"
+               style="width: 25%">
+      <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
+    </nz-select>
+  </div>
+  <div class="export-buttons">
+    <button nz-button nzType="primary" (click)="exportToPdf()"
+            [nzLoading]="pdfLoading">
+      <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
+      Descargar PDF
+    </button>
+    <button nz-button nzType="default" (click)="exportToExcel()"
+            [nzLoading]="excelLoading">
+      <span nz-icon nzType="file-excel" nzTheme="outline"></span>
+      Descargar Excel
+
+    </button>
+  </div>
+
+  <div style="margin-bottom: 1rem;" class="hidden">
+    <span style="margin-right: 1rem;">Filtrar por fecha de validacion</span>
+    <nz-switch nzSize="small" [ngModel]="filterByCreatedDate" (ngModelChange)="filterByCreatedDate = $event"></nz-switch>
+  </div>
+
+
+
+
+  <div class="flex">
+    <nz-range-picker class="hidden" (keydown.enter)="getTickets()" [(ngModel)]="date"
+                     [nzPlaceHolder]="['Desde', 'Hasta']" (ngModelChange)="onChange($event)"></nz-range-picker>
+    <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Nro serie"
+           [(ngModel)]="series"/>
+    <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nro de ticket"
+           [(ngModel)]="ticketNumber"/>
+
+    <input class="hidden" (keydown.enter)="getTickets()" style="width: 150px" nz-input placeholder="Nombre de paciente"
+           [(ngModel)]="name"/>
+    <input class="hidden" (keydown.enter)="getTickets()" style="width: 130px" nz-input placeholder="DNI de paciente"
+           [(ngModel)]="dni"/>
+    <input class="hidden" (keydown.enter)="getTickets()" style="width: 100px" nz-input placeholder="Descripcion"
+           [(ngModel)]="serviceName"/>
+    <button class="search-button hidden" nz-button nzType="primary" (click)="getTickets()" [nzLoading]="loading">
+      <span nz-icon nzType="search"></span>
+      Buscar
+    </button>
+  </div>
+
+
+  <div>
+    <app-ticket-table [data]="listOfData" [showValidationFunction]="false"></app-ticket-table>
+  </div>
+
+  <nz-drawer
+    [nzClosable]="false"
+    [nzVisible]="visible"
+    nzPlacement="bottom"
+    [nzHeight]="isAdmin || isServiceBoss ? 310 : 450"
+    nzTitle="Filtros"
+    (nzOnClose)="close()"
+  >
+    <ng-container *nzDrawerContent>
+      <div class="visible" *ngIf="isAdmin" style="margin-bottom: 1rem">
+        <nz-select nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="serviceToSearch"
+                   [nzLoading]="servicesLoading" style="width: 100%">
+          <nz-option *ngFor="let service of listOfServices" [nzValue]="service"
+                     [nzLabel]="formatServiceDisplay(service)"></nz-option>
+        </nz-select>
+      </div>
+      <div class="visible" *ngIf="isServiceBoss" style="margin-bottom: 1rem">
+        <nz-select nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch"
+                   [nzLoading]="rolesLoading" style="width: 100%">
+          <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username"
+                     [nzLabel]="user.username"></nz-option>
+        </nz-select>
+      </div>
+      <div style="margin-bottom: 1rem; display: flex; justify-content: center" class="visible">
+        <span style="margin-right: 1rem;">Filtrar por fecha de validacion</span>
+        <nz-switch nzSize="small" [ngModel]="filterByCreatedDate" (ngModelChange)="filterByCreatedDate = $event"></nz-switch>
+      </div>
+      <div
+        style="display: flex; justify-content: space-between; gap: 10px; align-items: center; width: 100%; margin-bottom: 1rem">
+        <nz-date-picker class="visible" style="width: 100%" nzPlaceHolder="Desde" [(ngModel)]="dateFrom"
+                        (ngModelChange)="onChange($event)"></nz-date-picker>
+        <p style="margin: 0px">-</p>
+        <nz-date-picker class="visible" style="width: 100%" nzPlaceHolder="Hasta" [(ngModel)]="dateTo"
+                        (ngModelChange)="onChange($event)"></nz-date-picker>
+      </div>
+
+      <ng-container *ngIf="!isServiceBoss && !isAdmin">
+        <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 1rem">
+          <input class="visible" style="text-transform: uppercase; width: 40%" (keydown.enter)="getTickets()" nz-input
+                 placeholder="Nro serie" [(ngModel)]="series"/>
+          <input class="visible" (keydown.enter)="getTickets()" style="width: 100%" nz-input placeholder="Nro de ticket"
+                 [(ngModel)]="ticketNumber"/>
+        </div>
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input
+               placeholder="Nombre de paciente" [(ngModel)]="name"/>
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input
+               placeholder="DNI de paciente" [(ngModel)]="dni"/>
+        <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input
+               placeholder="Descripcion" [(ngModel)]="serviceName"/>
+
+      </ng-container>
+
+      <button class="search-button" nz-button nzType="primary" style="width: 100%" (click)="getTickets()"
+              [nzLoading]="loading">
         <span nz-icon nzType="search"></span>
         Buscar
       </button>
-    </div>
-
-
-    <div>
-      <app-ticket-table [data]="listOfData" [showValidationFunction]="false"></app-ticket-table>
-    </div>
-
-    <nz-drawer
-      [nzClosable]="false"
-      [nzVisible]="visible"
-      nzPlacement="bottom"
-      [nzHeight]="isAdmin || isServiceBoss ? 280 : 420"
-      nzTitle="Filtros"
-      (nzOnClose)="close()"
-    >
-      <ng-container *nzDrawerContent>
-        <div class="visible" *ngIf="isAdmin" style="margin-bottom: 1rem">
-          <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="serviceToSearch" [nzLoading]="servicesLoading" style="width: 100%">
-            <nz-option *ngFor="let service of listOfServices" [nzValue]="service" [nzLabel]="formatServiceDisplay(service)"></nz-option>
-          </nz-select>
-        </div>
-        <div class="visible" *ngIf="isServiceBoss" style="margin-bottom: 1rem">
-          <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading" style="width: 100%">
-            <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
-          </nz-select>
-        </div>
-        <div
-          style="display: flex; justify-content: space-between; gap: 10px; align-items: center; width: 100%; margin-bottom: 1rem">
-          <nz-date-picker class="visible" style="width: 100%" nzPlaceHolder="Desde" [(ngModel)]="dateFrom"
-                          (ngModelChange)="onChange($event)"></nz-date-picker>
-          <p style="margin: 0px">-</p>
-          <nz-date-picker class="visible" style="width: 100%" nzPlaceHolder="Hasta" [(ngModel)]="dateTo"
-                          (ngModelChange)="onChange($event)"></nz-date-picker>
-        </div>
-
-        <ng-container *ngIf="!isServiceBoss && !isAdmin">
-          <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 1rem">
-            <input class="visible" style="text-transform: uppercase; width: 40%" (keydown.enter)="getTickets()" nz-input placeholder="Nro serie" [(ngModel)]="series"/>
-            <input class="visible" (keydown.enter)="getTickets()" style="width: 100%" nz-input placeholder="Nro de ticket" [(ngModel)]="ticketNumber"/>
-          </div>
-          <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input placeholder="Nombre de paciente" [(ngModel)]="name"/>
-          <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input placeholder="DNI de paciente" [(ngModel)]="dni"/>
-          <input class="visible" (keydown.enter)="getTickets()" style="width: 100%; margin-bottom: 1rem" nz-input placeholder="Descripcion" [(ngModel)]="serviceName"/>
-
-        </ng-container>
-
-        <button class="search-button" nz-button nzType="primary" style="width: 100%" (click)="getTickets()" [nzLoading]="loading">
-          <span nz-icon nzType="search"></span>
-          Buscar
-        </button>
-      </ng-container>
-    </nz-drawer>
-  </div>
+    </ng-container>
+  </nz-drawer>
+</div>
 
 
 <!--</nz-spin>-->
