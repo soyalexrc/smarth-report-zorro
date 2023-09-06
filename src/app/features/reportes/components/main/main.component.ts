@@ -32,6 +32,7 @@ export class MainComponent implements OnInit, OnDestroy {
   excelLoading = false;
   rolesLoading = false;
   servicesLoading = false;
+  filterByCreatedDate = true;
 
   userRoleToSearch: any;
   currentRoleToSearch: any;
@@ -118,11 +119,12 @@ export class MainComponent implements OnInit, OnDestroy {
     const customDate = `${rangeOne}#${rangeTwo}`
     const filters: any = [];
 
+    console.log(this.filterByCreatedDate);
 
     if (!this.getFilter(filters, 'fecha_creacion')) {
       if (Boolean((this.dateFrom && this.dateTo) || this.date)) {
         filters.push({
-          field: 'fecha_creacion',
+          field: this.filterByCreatedDate ? 'created_date' : 'fecha_creacion',
           value: customDate
         })
       }
