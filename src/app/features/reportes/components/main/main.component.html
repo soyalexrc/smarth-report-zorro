@@ -31,6 +31,11 @@
 
     </div>
 
+    <div style="margin-bottom: 1rem;" class="hidden" >
+      <span style="margin-right: 1rem;">Filtrar por fecha de validacion</span>
+      <nz-switch nzSize="small" [ngModel]="filterByCreatedDate" (ngModelChange)="filterByCreatedDate = $event"></nz-switch>
+    </div>
+
     <div class="hidden-block" *ngIf="isAdmin" style="margin-bottom: 1rem">
       <nz-select  nzPlaceHolder="Buscar por servicio" [(ngModel)]="serviceToSearch" [nzLoading]="servicesLoading" style="width: 25%">
         <nz-option *ngFor="let service of listOfServices" [nzValue]="service" [nzLabel]="formatServiceDisplay(service)"></nz-option>
@@ -61,11 +66,6 @@
         Descargar Excel
 
     </button>
-  </div>
-
-  <div style="margin-bottom: 1rem;" class="hidden">
-    <span style="margin-right: 1rem;">Filtrar por fecha de validacion</span>
-    <nz-switch nzSize="small" [ngModel]="filterByCreatedDate" (ngModelChange)="filterByCreatedDate = $event"></nz-switch>
   </div>
 
     <div class="flex" >
