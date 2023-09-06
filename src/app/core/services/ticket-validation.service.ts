@@ -26,8 +26,8 @@ export class TicketValidationService {
   getTicketsByService(service: string): Observable<any> {
     return this.http.get(`${this.basePath}/external/report/by-role/${service}`)
   }
-  getTicketsByServiceWithFilters(service: string, filters: any): Observable<any> {
-    return this.http.post(`${this.basePath}/external/report/by-role/${service}/search`, {filters: filters})
+  getTicketsByServiceWithFilters(roles: string[], filters: any): Observable<any> {
+    return this.http.post(`${this.basePath}/external/report/by-roles/search`, {filters, roles})
   }
 
   validateTicket(ticket: any): Observable<any> {

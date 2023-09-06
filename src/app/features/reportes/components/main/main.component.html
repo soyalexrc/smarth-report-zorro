@@ -32,15 +32,21 @@
     </div>
 
     <div class="hidden-block" *ngIf="isAdmin" style="margin-bottom: 1rem">
-      <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="serviceToSearch" [nzLoading]="servicesLoading" style="width: 25%">
+      <nz-select  nzPlaceHolder="Buscar por servicio" [(ngModel)]="serviceToSearch" [nzLoading]="servicesLoading" style="width: 25%">
         <nz-option *ngFor="let service of listOfServices" [nzValue]="service" [nzLabel]="formatServiceDisplay(service)"></nz-option>
       </nz-select>
     </div>
 
 
     <div class="hidden-block" *ngIf="isServiceBoss" style="margin-bottom: 1rem">
-      <nz-select  nzPlaceHolder="Buscar por usuario de servicio" [(ngModel)]="userRoleToSearch" [nzLoading]="rolesLoading" style="width: 25%">
+      <nz-select  nzPlaceHolder="Buscar por servicio" (ngModelChange)="getUsersByRole($event)"  [(ngModel)]="currentRoleToSearch"  style="width: 25%; margin-right: 1rem;">
+        <nz-option *ngFor="let role of listOfRoles" [nzValue]="role" [nzLabel]="role"></nz-option>
+        <nz-option  nzValue="all" nzLabel="Todos"></nz-option>
+      </nz-select>
+
+      <nz-select [nzLoading]="rolesLoading" [disabled]="!currentRoleToSearch || currentRoleToSearch === 'all'" [nzPlaceHolder]="'Filrar en ' + ((currentRoleToSearch && currentRoleToSearch !== 'all') ? currentRoleToSearch : '')" [(ngModel)]="userRoleToSearch"  style="width: 25%">
         <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
+        <nz-option nzValue="all" nzLabel="Todos"></nz-option>
       </nz-select>
     </div>
     <div class="export-buttons">
