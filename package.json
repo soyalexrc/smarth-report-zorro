@@ -7,6 +7,8 @@
     "dev": "ng serve --watch",
     "dev-host": "ng serve --watch --host 192.168.1.34",
     "build": "ng build",
+    "docker-build": "docker build -t pruebacontainerluighi2693/smart-report-frontend:latest .",
+    "docker-push": "docker push pruebacontainerluighi2693/smart-report-frontend:latest",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
