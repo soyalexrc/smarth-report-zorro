@@ -50,8 +50,9 @@
       </nz-select>
 
       <nz-select [nzLoading]="rolesLoading" [disabled]="!currentRoleToSearch || currentRoleToSearch === 'all'" [nzPlaceHolder]="'Filrar en ' + ((currentRoleToSearch && currentRoleToSearch !== 'all') ? currentRoleToSearch : '')" [(ngModel)]="userRoleToSearch"  style="width: 25%">
-        <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
         <nz-option nzValue="all" nzLabel="Todos"></nz-option>
+        <nz-option *ngFor="let user of listOfUsersByRole" [nzValue]="user.username" [nzLabel]="user.username"></nz-option>
+        <nz-option [nzValue]="user.sub" [nzLabel]="user.sub"></nz-option>
       </nz-select>
     </div>
     <div class="export-buttons">
