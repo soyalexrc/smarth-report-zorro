@@ -3,7 +3,7 @@
     {{ticketsToReport.length > 0 ? 'Imprimir' : 'Cargando informacion...'}}
   </button>
 </div>
-<table style="margin: 1rem">
+<table *ngIf="userType === 'user'" style="margin: 1rem">
   <thead>
   <tr>
     <th>Ticket</th>
@@ -40,3 +40,51 @@
   </tr>
   </tbody>
 </table>
+
+
+<ng-container *ngIf="userType !== 'user'" >
+  <ng-container *ngFor="let ticketsByService of ticketsToReport">
+    <h1 class="group-title">{{ ticketsByService[0] }}</h1>
+    <table style="margin: 1rem" >
+      <thead>
+      <tr>
+        <th>Ticket</th>
+        <th>Nombre paciente</th>
+        <th>DNI</th>
+        <th>Fecha</th>
+        <th>Descripcion</th>
+        <th>Moneda</th>
+        <th>Monto</th>
+        <th>IGV</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ticketsByService[1]">
+        <td class="space-horizontal" style="width: 11%">{{ data.C_NRO_SERIE }} - {{data.C_NRO_DOC}}</td>
+        <td class="space-horizontal" style="width: 25%">{{ data.C_APAMNO_RAZON_SOCIAL_ADQUIRIENTE }}</td>
+        <td class="space-horizontal" style="width: 8%">{{ data.C_NRO_DOC_ADQUIRIENTE }}</td>
+        <td class="space-horizontal" style="width: 7%">{{ data.C_FEC_CREA_FACE | date:'M/d/y ' }}</td>
+        <td style="padding: 0 2rem; width: 25%">
+          <ul>
+            <li style="max-width: 200px;" *ngFor="let item of data.C_DESRIP_ITEM.split('#')">{{item}}</li>
+          </ul>
+        </td>
+        <td class="space-horizontal" style="width: 5%">{{ data.C_MONEDA }}</td>
+        <td class="space-horizontal" style="width: 5%">{{ handleCustomCurrencyFormat(data.C_TOTAL_OPERACIONES_GRAV)}}</td>
+        <td class="space-horizontal" style="width: 5%">{{ handleCustomCurrencyFormat(data.C_MONTO_TOTAL_IGV )}}</td>
+        <td class="space-horizontal" style="width: 5%">{{ handleCustomCurrencyFormat(data.C_MONTO_PAGAR)}}</td>
+      </tr>
+      <tr style="text-align: right">
+        <td colspan="9" class="space-horizontal">
+          <h1>Total: {{getTotalByGroup(ticketsByService[1]) | currency: 'S/. '}}</h1>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <h1 class="group-title">Total global: {{getLastTotal() | currency: 'S/. '}}</h1>
+
+</ng-container>
+

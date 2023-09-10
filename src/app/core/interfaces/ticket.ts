@@ -15,4 +15,5 @@ export interface Ticket {
   C_ID_ITEM: string | number
   C_DESRIP_ITEM: string
   created_date?: Date
+  serviceName: string;
 }

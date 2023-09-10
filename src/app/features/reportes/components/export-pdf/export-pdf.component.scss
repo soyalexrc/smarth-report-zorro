@@ -2,6 +2,14 @@ th,  td {
   border: 1px solid lightgray;
 }
 
+.group-title {
+  margin: 1rem 0;
+  font-size: 36px;
+  text-align: center;
+  padding: 1rem 0;
+  display: none;
+}
+
 .space-horizontal {
   padding: 0 .5rem;
 }
@@ -28,9 +36,14 @@ table {
 }
 
 @media print {
+
+  .group-title {
+    display: block;
+  }
   .print-button {
     display:  none;
   }
+
   table {
     display: block;
   }
