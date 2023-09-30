@@ -24,10 +24,12 @@ export class ExportPdfComponent implements OnInit {
   ngOnInit() {
     const requestInfo = JSON.parse(localStorage.getItem('request-info') ?? '');
     const {user, type, filters, roles} = requestInfo;
-    this.userType = user;
+    this.userType = type;
+    console.log(this.userType);
     if (type === 'user') {
       this.ticketService.getTicketsByUserNameAndFilters(user, filters).subscribe(response => {
         this.ticketsToReport = response;
+        console.log(response);
       })
     } else {
       this.ticketService.getTicketsByServiceWithFilters(roles, filters).subscribe(response => {
